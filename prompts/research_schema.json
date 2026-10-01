@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "run_note": {"type": "string"},
+    "photographers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "kind": {"type": "string", "enum": ["master", "educator"]},
+          "identity": {"type": "string"},
+          "official_url": {"type": "string"},
+          "extra_urls": {"type": "array", "items": {"type": "string"}},
+          "facts": {"type": "array", "items": {"type": "object", "properties": {"note": {"type": "string"}, "url": {"type": "string"}}, "required": ["note", "url"]}, "minItems": 3, "maxItems": 6},
+          "themes": {"type": "array", "items": {"type": "string"}}
+        },
+        "required": ["name", "kind", "identity", "official_url", "extra_urls", "facts", "themes"]
+      }
+    },
+    "articles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {"title": {"type": "string"}, "url": {"type": "string"}, "author": {"type": "string"}, "teaches": {"type": "string"}, "themes": {"type": "array", "items": {"type": "string"}}},
+        "required": ["title", "url", "author", "teaches", "themes"]
+      }
+    },
+    "recipes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "author": {"type": "string"},
+          "source_url": {"type": "string"},
+          "sensor_generation": {"type": "string", "enum": ["X-Trans V", "X-Trans IV", "other"]},
+          "film_simulation": {"type": "string"},
+          "settings": {"type": "object", "additionalProperties": {"type": "string"}},
+          "light_tags": {"type": "array", "items": {"type": "string", "enum": ["sunny", "overcast", "rain", "golden_hour", "night", "indoor", "any"]}}
+        },
+        "required": ["name", "author", "source_url", "sensor_generation", "film_simulation", "settings", "light_tags"]
+      }
+    },
+    "tips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {"topic": {"type": "string"}, "title": {"type": "string"}, "facts": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 5}, "menu_path": {"type": "string"}, "manual_url": {"type": "string"}},
+        "required": ["topic", "title", "facts", "menu_path", "manual_url"]
+      }
+    },
+    "recipe_tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {"source_url": {"type": "string"}, "light_tags": {"type": "array", "items": {"type": "string", "enum": ["sunny", "overcast", "rain", "golden_hour", "night", "indoor", "any"]}}},
+        "required": ["source_url", "light_tags"]
+      }
+    }
+  },
+  "required": ["run_note", "photographers", "articles", "recipes", "tips", "recipe_tags"]
+}
