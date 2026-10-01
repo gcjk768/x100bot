@@ -67,6 +67,10 @@ def rules_from_settings(s, seed: bool = False) -> dict[str, Rule]:
         "telegram": Rule(gap=(t.min_gap_seconds, t.min_gap_seconds + 0.3), window=(t.max_per_minute, 60.0)),
         "claude": Rule(per_day=c.max_scheduled_calls_per_day),
         "critique": Rule(per_day=c.max_critiques_per_day),
+        "teacher_critique": Rule(per_day=s.limits.teacher.max_critiques_per_day),
+        "teacher_followup": Rule(per_day=s.limits.teacher.max_followups_per_day),
+        "teacher_question": Rule(per_day=s.limits.teacher.max_questions_per_day),
+        "teacher_series": Rule(per_day=s.limits.teacher.max_series_per_day),
     }
 
 

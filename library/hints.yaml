@@ -1,0 +1,51 @@
+# Rules that map measurements and EXIF to plain advice, for the fallback critique and the weekly setup hint.
+# Each rule: when (all conditions must hold), advice, settings (teacher settings fields to suggest), menu (keys in
+# camera/settings_menu_map.yaml to print), tag. Conditions: metric, op (gt, lt, ge, le, eq, true, false), value.
+# Metrics come from measure.measure() flattened (highlights_clipped_pct, shadows_crushed_pct, tilt.tilted,
+# sharpness.blur_suspect, colour.cast, luma_mean) and from EXIF (exif.shutter seconds, exif.iso, exif.aperture).
+rules:
+  - tag: highlights_clipped
+    when: [{metric: highlights_clipped_pct, op: ge, value: threshold}]
+    advice: "The brightest parts of the frame are clipped, so detail there is gone. Give the highlights room with less exposure, or let DYNAMIC RANGE 400% protect them."
+    settings: {exposure_comp: "-2/3", dynamic_range: "400%"}
+    menu: [exposure_comp, dynamic_range]
+  - tag: shadows_crushed
+    when: [{metric: shadows_crushed_pct, op: ge, value: threshold}]
+    advice: "A large share of the frame is pure black. If you want detail there, add exposure, or embrace it and make the shapes the subject."
+    settings: {exposure_comp: "+2/3"}
+    menu: [exposure_comp]
+  - tag: tilted_horizon
+    when: [{metric: tilt.tilted, op: true}]
+    advice: "The horizon or the verticals lean. Turn on the virtual horizon and the thirds grid so you see it before you press the shutter."
+    settings: {}
+    menu: [electronic_level, framing_guideline]
+  - tag: camera_shake
+    when: [{metric: sharpness.blur_suspect, op: true}, {metric: exif.shutter, op: gt, value: 0.008}]
+    advice: "The sharpest part of the frame is still soft and the shutter was slower than 1/125. Let the camera keep the shutter up with an ISO AUTO SETTING that has a minimum shutter speed of 1/250."
+    settings: {iso: "AUTO2, min shutter 1/250"}
+    menu: [iso_auto]
+  - tag: missed_focus
+    when: [{metric: sharpness.blur_suspect, op: true}, {metric: exif.shutter, op: le, value: 0.008}]
+    advice: "Even the sharpest area is soft although the shutter was fast, so focus probably landed elsewhere. Use SINGLE POINT and put the point on the subject, or zone focus with the distance scale for street scenes."
+    settings: {af_area: "SINGLE POINT"}
+    menu: [af_area, focus_mode]
+  - tag: colour_cast
+    when: [{metric: colour.cast, op: eq, value: warm}]
+    advice: "The whole frame leans warm. If that was not the intent, check WHITE BALANCE or choose a recipe with a cooler white balance for this light."
+    settings: {}
+    menu: [film_simulation]
+  - tag: colour_cast
+    when: [{metric: colour.cast, op: eq, value: cool}]
+    advice: "The whole frame leans blue. Shade and overcast light do this; a recipe with a warmer white balance or DAYLIGHT white balance brings skin and stone back."
+    settings: {}
+    menu: [film_simulation]
+  - tag: underexposed
+    when: [{metric: luma_mean, op: lt, value: 60}, {metric: shadows_crushed_pct, op: lt, value: threshold}]
+    advice: "The frame is dark overall without the shadows being blocked. If it is not a night scene by intent, add exposure or let ISO rise."
+    settings: {exposure_comp: "+2/3"}
+    menu: [exposure_comp]
+  - tag: overexposed
+    when: [{metric: luma_mean, op: gt, value: 195}, {metric: highlights_clipped_pct, op: lt, value: threshold}]
+    advice: "The frame is bright overall. Pull exposure back a little so the midtones have colour."
+    settings: {exposure_comp: "-2/3"}
+    menu: [exposure_comp]

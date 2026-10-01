@@ -94,5 +94,31 @@ limits:
   claude:
     max_scheduled_calls_per_day: 3           # research, compose, one retry
     max_critiques_per_day: 10
+  teacher:
+    max_critiques_per_day: 15
+    max_followups_per_day: 40
+    max_questions_per_day: 20
+    max_series_per_day: 3
+    queue_max: 20
+teacher:
+  enabled: true
+  model: sonnet                      # set opus for deeper critiques if my plan allows
+  fallback_model: haiku
+  level: intermediate
+  style: encouraging                 # encouraging, direct or socratic
+  default_detail: full               # full or quick
+  timeout_seconds: 300
+  session_days: 30
+  retention_days: 180                # originals and folders older than this are deleted
+  claude_long_edge_px: 2048
+  analysis_long_edge_px: 1024
+  overlay_long_edge_px: 1600
+  max_file_mb: 20
+  series_max_images: 8
+  album_debounce_seconds: 3
+  weekly_report_cron: "0 20 * * 0"
+  monthly_best_cron: "0 20 1 * *"
+  score_weights: {composition: 0.25, light: 0.25, moment: 0.15, exposure: 0.15, focus: 0.10, colour: 0.10}
+  measurement_thresholds: {highlights_clipped_pct: 1.0, shadows_crushed_pct: 2.0, cast_ab: 6.0, tilt_min_degrees: 0.7, tilt_min_lines: 4, blur_laplacian_min: 0}   # blur threshold calibrated at the first STOP HERE
 repair:
   enabled: false

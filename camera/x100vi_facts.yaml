@@ -20,6 +20,10 @@ facts:
     text: fixed 23mm lens, 35mm in 35mm format terms, maximum aperture F2.0
     url: https://www.fujifilm-x.com/global/products/cameras/x100vi/specifications/
     manual_spec: https://fujifilm-dsc.com/en/manual/x100vi/technical_notes/spec/
+  - id: aperture_range
+    text: aperture range F2.0 to F16 on the aperture ring
+    url: https://www.fujifilm-x.com/global/products/cameras/x100vi/specifications/
+    note: the manual's text does not state the smallest aperture; F16 is from the specifications page, which the bot cannot reopen
   - id: min_focus
     text: minimum focus distance about 10 cm
     url: https://www.fujifilm-x.com/global/products/cameras/x100vi/specifications/
@@ -106,5 +110,6 @@ settings:
     note: the manual shows the range only in its MONOCHROMATIC COLOR screenshot (images/osd_mn_sm_mono_color_x100-6_en.png), a grid of 37 positions per axis, so -18 to +18
   iso: {standard: {min: 125, max: 12800}, extended: [64, 80, 100, 25600, 51200], url: "https://fujifilm-dsc.com/en/manual/x100vi/technical_notes/spec/"}
   exposure_compensation: {min: -5, max: 5, url: "https://fujifilm-dsc.com/en/manual/x100vi/technical_notes/spec/"}
+  aperture: {min: 2.0, max: 16, url: "https://www.fujifilm-x.com/global/products/cameras/x100vi/specifications/"}
   custom_banks: {min: 1, max: 7, url: "https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#select_custom_setting"}
   auto_update_custom_setting: {values: [ENABLE, DISABLE], url: "https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#auto_update_custom_setting"}
