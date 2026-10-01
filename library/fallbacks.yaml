@@ -1,0 +1,91 @@
+# Static text the fallback templates use when the compose call fails or is skipped, so the day is never empty.
+# Written during the build in plain English. It states no recipe settings and no camera facts beyond
+# camera/x100vi_facts.yaml. Keys match curriculum.yaml. Each theme has two composition lessons, a drill and
+# three review questions. Edit freely; keep it free of dashes.
+themes:
+  light:
+    composition:
+      - {title: Find the direction of the light, what_it_is: "Light that comes from the side shows shape and texture. Light from behind you flattens a scene, light from in front of you outlines it.", how_to_see: "Before you raise the camera, look at which side of a face or a wall is brighter.", exercise: "Photograph one object three times: lit from the front, from the side, and from behind.", mistake: "Shooting everything with the sun at your back. Walk around the subject until the shadows start to draw it."}
+      - {title: Open shade is your friend, what_it_is: "The edge of a shadow on a bright day gives soft, even light with a clear direction. Faces and fruit stalls glow there.", how_to_see: "Look for the line where a building's shadow meets the sunlit street, and put your subject just inside it.", exercise: "Make five frames of something sitting in open shade with a bright background behind it.", mistake: "Exposing for the bright background. Expose for the subject in the shade and let the background go light."}
+    drill: {title: Ten minutes of light hunting, steps: ["Pick one street corner.", "Find three different kinds of light within twenty steps.", "Make two frames in each.", "Write down which light you liked best and why."]}
+    review: {q1: "Where was the light coming from in your best frame?", q2: "Is the light hard or soft, and does that suit the subject?", q3: "What would change if you came back an hour later?"}
+  subject:
+    composition:
+      - {title: One subject at a time, what_it_is: "A photo is easier to read when it is clearly about one thing. Everything else should support it or stay quiet.", how_to_see: "Say in three words what the photo is about before you press the shutter.", exercise: "Make ten frames where you can name the subject in three words.", mistake: "Including everything you saw. Step closer until only the subject and its context remain."}
+      - {title: Clean up the background, what_it_is: "The background decides whether a subject stands out or disappears. A small step sideways often removes a pole or a sign.", how_to_see: "Check the edges and the space behind the subject's head before you shoot.", exercise: "For each subject today, take one frame, then move once to simplify the background and take another.", mistake: "Only looking at the subject. Spend a second looking behind it."}
+    drill: {title: Background swap, steps: ["Choose a still subject such as a bicycle or a plant.", "Shoot it against five different backgrounds by moving yourself.", "Pick the cleanest one.", "Note what made it work."]}
+    review: {q1: "Can you name the subject of each frame in three words?", q2: "Is anything in the background competing for attention?", q3: "Which frame would be better one step to the left or right?"}
+  placement:
+    composition:
+      - {title: Thirds as a starting point, what_it_is: "Placing a subject a third of the way into the frame leaves room for it to look or move into. It is a habit, not a rule.", how_to_see: "Notice where the subject is facing, and give that side the space.", exercise: "Shoot five subjects off centre with space in the direction they face.", mistake: "Putting the space behind the subject so it seems to leave the frame."}
+      - {title: When the centre works, what_it_is: "Symmetry and strong central subjects feel calm and bold. Doorways, corridors and faces often want the centre.", how_to_see: "Look for a scene that is the same on both sides.", exercise: "Find three symmetrical scenes and place the subject dead centre.", mistake: "Nearly centred. Commit fully to the centre or move clearly away from it."}
+    drill: {title: Three placements, steps: ["Pick one subject.", "Shoot it on the left third, the centre and the right third.", "Compare the three frames.", "Keep the one with the best balance."]}
+    review: {q1: "Where did you place the subject and why?", q2: "Does the frame feel balanced or deliberately tense?", q3: "Is there a heavy element pulling the eye away?"}
+  lines:
+    composition:
+      - {title: Lines that lead in, what_it_is: "Roads, railings and shadows pull the eye through a photo. When they point at your subject, the photo reads quickly.", how_to_see: "Look down at the ground and the walls for lines that run toward something interesting.", exercise: "Make ten frames where a line leads to the subject.", mistake: "A line that leads out of the frame. Shift your position until it ends at the subject."}
+      - {title: Repetition and rhythm, what_it_is: "Repeated shapes such as windows, pillars or railings create rhythm. One break in the pattern becomes the subject.", how_to_see: "Look along HDB corridors and shophouse rows for repeating shapes.", exercise: "Find a pattern and wait for one person or object to break it.", mistake: "Shooting the pattern alone. Give it a point of interest."}
+    drill: {title: Line walk, steps: ["Walk one block.", "Photograph one straight line, one diagonal and one curve.", "Find one repeating pattern.", "Pick the strongest frame."]}
+    review: {q1: "Which line in your frame does the eye follow first?", q2: "Do the lines lead to the subject or away from it?", q3: "Would a lower or higher camera position make the lines stronger?"}
+  framing:
+    composition:
+      - {title: A frame inside the frame, what_it_is: "Doorways, windows and gaps between buildings wrap a subject and point to it. They also add depth.", how_to_see: "Look for darker shapes around a brighter scene.", exercise: "Make five frames through a doorway, window or gap.", mistake: "A frame that cuts the subject. Step back until the subject sits fully inside."}
+      - {title: Natural frames, what_it_is: "Branches, arches and people's shoulders can frame too. The frame does not have to be complete to work.", how_to_see: "Shoot through things rather than around them.", exercise: "Find three partial frames in a park or market.", mistake: "Letting the frame become the subject. Keep it darker or simpler."}
+    drill: {title: Through the gap, steps: ["Find one doorway or gap.", "Wait for a person to pass through the scene behind it.", "Make five frames.", "Keep the one with the clearest subject."]}
+    review: {q1: "What frames the subject in your best photo?", q2: "Does the frame lead the eye in or distract from the subject?", q3: "Is the subject clear of the frame's edges?"}
+  layering:
+    composition:
+      - {title: Foreground that leads the eye, what_it_is: "Layering places something close, something in the middle and something far, so the photo feels deep instead of flat.", how_to_see: "Look for a railing, a plant or a shoulder near you that points toward your main subject.", exercise: "Make ten frames today where something within one metre of the lens is part of the story.", mistake: "A foreground so bright or sharp that it steals attention, so keep it darker or simpler than the subject."}
+      - {title: Three planes, what_it_is: "Busy streets give you people at different distances. Arranging them so they do not overlap creates layers.", how_to_see: "Watch for gaps between people at different distances.", exercise: "Make five frames with a clear foreground, middle and background subject.", mistake: "Overlapping heads. Wait a second for people to separate."}
+    drill: {title: Layer stack, steps: ["Stand near something close to the lens.", "Find a middle subject.", "Check the background.", "Make five frames as people move through."]}
+    review: {q1: "How many layers can you count in your best frame?", q2: "Does anything in one layer overlap another awkwardly?", q3: "Which layer holds the subject?"}
+  negative_space:
+    composition:
+      - {title: Let the empty space speak, what_it_is: "Empty space around a small subject gives it importance and calm. Plain walls and sky work well.", how_to_see: "Look for a large plain area with one small subject in it.", exercise: "Make five frames where the subject fills less than a tenth of the frame.", mistake: "Clutter in the empty area. Keep the space truly simple."}
+      - {title: Less is more, what_it_is: "Minimalism removes everything that does not help the photo. What remains has to be strong.", how_to_see: "Count the elements in your frame and try to remove one.", exercise: "Shoot one scene, then remove one element at a time by moving.", mistake: "Removing the context that made it interesting."}
+    drill: {title: Small in a big frame, steps: ["Find a plain wall or open sky.", "Wait for one person or object.", "Place them small and off centre.", "Make five frames."]}
+    review: {q1: "What does the empty space add to the photo?", q2: "Is the subject still easy to find?", q3: "What could you remove to simplify further?"}
+  colour:
+    composition:
+      - {title: Colour contrast, what_it_is: "Opposite colours such as red against green or blue against orange make a subject jump out.", how_to_see: "Look for one strong colour against a different background colour.", exercise: "Find five pairs of contrasting colours.", mistake: "Too many strong colours at once. Keep it to two or three."}
+      - {title: Colour as the subject, what_it_is: "Sometimes the photo is about the colour itself. A yellow wall with one red door can be enough.", how_to_see: "Notice colour before shape.", exercise: "Make five frames where colour is the main reason for the photo.", mistake: "Washing the colour out by overexposing. Protect the colour."}
+    drill: {title: One colour walk, steps: ["Pick one colour.", "Photograph it ten times in ten minutes.", "Look for it in signs, clothes and walls.", "Choose your favourite."]}
+    review: {q1: "Which colour leads your best frame?", q2: "Do the colours work together or fight?", q3: "Would this frame be stronger in black and white?"}
+  bw:
+    composition:
+      - {title: Seeing in tones, what_it_is: "Without colour, a photo depends on light, shape and texture. Bright against dark is the new contrast.", how_to_see: "Squint at the scene to see the light and dark shapes.", exercise: "Make ten frames where the subject is lighter or darker than its background.", mistake: "Scenes that rely on colour. They often turn grey and flat."}
+      - {title: Texture and shadow, what_it_is: "Side light brings out texture in walls, skin and fabric. In black and white texture becomes the subject.", how_to_see: "Look for low side light across a rough surface.", exercise: "Find five textures lit from the side.", mistake: "Flat front light that hides texture."}
+    drill: {title: Tone hunt, steps: ["Set a monochrome film simulation.", "Find one very bright and one very dark area together.", "Place a subject where they meet.", "Make five frames."]}
+    review: {q1: "Where are the brightest and darkest parts of your frame?", q2: "Does the subject separate from the background by tone?", q3: "What texture did you capture?"}
+  street:
+    composition:
+      - {title: Zone focusing, what_it_is: "Setting focus in advance to a distance lets you shoot at the moment without waiting for autofocus.", how_to_see: "Pick a distance, such as three metres, and notice when people enter it.", exercise: "Preset your focus distance and make twenty frames of people at that distance.", mistake: "Changing distance constantly. Stay with one zone for a while."}
+      - {title: Anticipate the moment, what_it_is: "Good street moments are often predicted. Find a good background, then wait for life to happen in it.", how_to_see: "Look for a stage: good light, a clean background, people passing.", exercise: "Wait ten minutes at one spot and shoot only when something happens.", mistake: "Chasing people. Let them come to you."}
+    drill: {title: Fish and wait, steps: ["Find a well lit background.", "Preset focus and exposure.", "Wait for a person to enter.", "Shoot, and repeat for ten minutes."]}
+    review: {q1: "What is the moment in your best frame?", q2: "Did you anticipate it or react to it?", q3: "Would a step closer have made it stronger?"}
+  people:
+    composition:
+      - {title: Ask first, then wait, what_it_is: "An environmental portrait shows a person and their place. Asking permission and chatting first relaxes them.", how_to_see: "Look for people at work in a place that tells their story.", exercise: "Ask one person for a portrait today, and make several frames while you talk.", mistake: "Taking one frame and leaving. The best frames come after a minute."}
+      - {title: Shallow focus with context, what_it_is: "A wide aperture blurs the background, but at 35mm you still keep the place in the photo.", how_to_see: "Check that the background still says where they are.", exercise: "Make one portrait close and one with more of the place.", mistake: "Blurring away everything that tells the story."}
+    drill: {title: One conversation, steps: ["Find someone at a stall or shop.", "Say hello and ask if you can make a portrait.", "Make five frames as you chat.", "Thank them and show them a frame."]}
+    review: {q1: "Does the portrait show who the person is and where they are?", q2: "Are the eyes sharp?", q3: "Is the background helping or distracting?"}
+  night:
+    composition:
+      - {title: Blue hour balance, what_it_is: "Just after sunset the sky still holds colour while city lights switch on. Both are balanced for a short time.", how_to_see: "Look up after sunset and watch the sky turn deep blue.", exercise: "Make five frames in the blue hour with both sky and lights.", mistake: "Waiting too long until the sky goes black."}
+      - {title: Reflections after rain, what_it_is: "Wet streets turn lights into colour. Low angles make reflections bigger.", how_to_see: "Look down at puddles and wet roads near bright signs.", exercise: "After rain, find three reflections and shoot them low.", mistake: "Shooting from eye height so the reflection is tiny."}
+    drill: {title: Steady hands, steps: ["Find a lit scene at night.", "Hold the camera close and exhale as you press the shutter.", "Make five frames at slower shutter speeds.", "Check which ones are sharp."]}
+    review: {q1: "Where is the light coming from in your night frame?", q2: "Is the sky still holding colour?", q3: "Which frame is sharpest and why?"}
+
+golden_hour:
+  plan: "Arrive before golden hour starts, walk the spot once, and pick two places where the low sun hits something interesting."
+  look_for: "Long shadows, warm light on faces and walls, and backlit edges."
+
+learning_topics:
+  culling: {title: Cull in two passes, body: "Look through all your frames once quickly and flag only the ones that make you stop. Then look again at the flagged ones and keep the best of each moment. Deleting similar frames makes your best work easier to see.", action: "Cull today's frames down to five."}
+  reading light: {title: Read the light before you shoot, body: "Before raising the camera, ask where the light comes from and whether it is hard or soft. Hard light gives strong shadows and contrast. Soft light is gentle and even.", action: "Name the light out loud before every photo today."}
+  storytelling and series: {title: Think in series, body: "A single photo shows a moment. A series of five to ten frames can tell a story with a beginning, a middle and an end. Mix wide scenes, details and people.", action: "Make a five frame series about one street."}
+  straight out of camera workflow: {title: Finish in camera, body: "Choosing your recipe before you shoot means the photo is finished when you press the shutter. You spend your time looking, not editing.", action: "Shoot a whole day without editing a single frame."}
+  street etiquette: {title: Street photography with respect, body: "Be open, not sneaky. If someone objects, smile, show the photo and delete it if they ask. Avoid photographing people in vulnerable moments.", action: "Smile and nod at the next person you photograph."}
+  gear care in humidity: {title: Care for your camera in humid weather, body: "Moving from cold air conditioning into warm humid air can fog the lens. Let the camera warm up in your bag before taking it out. Store it with silica gel or in a dry cabinet.", action: "Check your storage and add fresh silica gel."}
+  backing up to the NAS: {title: Back up after every outing, body: "Copy your memory card to the NAS the same day, before you format it. Two copies in two places means one failure does not cost you photos.", action: "Back up this week's frames to the NAS tonight."}
+  choosing a recipe for the light: {title: Match the recipe to the light, body: "Some recipes are warm and suit golden hour, others are cool and suit overcast days. Check the forecast in the morning and load the recipe that fits.", action: "Pick tomorrow's recipe tonight from the forecast."}
