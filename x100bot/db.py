@@ -42,13 +42,27 @@ CREATE TABLE IF NOT EXISTS queue(
 CREATE TABLE IF NOT EXISTS custom_banks(bank INTEGER PRIMARY KEY, recipe_id INTEGER, set_at REAL);
 CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY, message_id INTEGER, queue_id INTEGER, saved_at REAL);
 CREATE TABLE IF NOT EXISTS assignments(date TEXT PRIMARY KEY, text TEXT, done_at REAL);
-CREATE TABLE IF NOT EXISTS critiques(id INTEGER PRIMARY KEY, at REAL, result_json TEXT, cost_usd REAL);
 CREATE TABLE IF NOT EXISTS firmware(version TEXT PRIMARY KEY, found_at REAL, url TEXT);
 CREATE TABLE IF NOT EXISTS runs(
   id INTEGER PRIMARY KEY, job TEXT, started_at REAL, finished_at REAL, status TEXT, cost_usd REAL,
   claude_session_id TEXT, note TEXT);
 -- small key value store: the getUpdates offset
 CREATE TABLE IF NOT EXISTS kv(key TEXT PRIMARY KEY, value TEXT);
+-- the photo teacher
+CREATE TABLE IF NOT EXISTS critiques(
+  id INTEGER PRIMARY KEY, created_at REAL, kind TEXT CHECK(kind IN ('single','compare','series')),
+  source TEXT CHECK(source IN ('photo','file')), file_unique_id TEXT, folder TEXT, caption TEXT, flags_json TEXT,
+  exif_json TEXT, measurements_json TEXT, result_json TEXT, scores_json TEXT, overall REAL, tags_json TEXT,
+  strength_tags_json TEXT, session_id TEXT, parent_id INTEGER, model TEXT, cost_usd REAL, used_fallback INTEGER,
+  status TEXT);
+CREATE TABLE IF NOT EXISTS teacher_messages(message_id INTEGER PRIMARY KEY, critique_id INTEGER, role TEXT);
+CREATE TABLE IF NOT EXISTS followups(
+  id INTEGER PRIMARY KEY, critique_id INTEGER, at REAL, question TEXT, answer_json TEXT, cost_usd REAL);
+CREATE TABLE IF NOT EXISTS teacher_queue(
+  id INTEGER PRIMARY KEY, kind TEXT, payload_json TEXT, not_before REAL, attempts INTEGER DEFAULT 0, status TEXT,
+  created_at REAL);
+CREATE TABLE IF NOT EXISTS teacher_settings(key TEXT PRIMARY KEY, value TEXT);
+CREATE TABLE IF NOT EXISTS profile_snapshots(date TEXT PRIMARY KEY, profile_json TEXT);
 """
 
 

@@ -1,0 +1,76 @@
+# Where each recommendable setting lives on the X100VI, from the official manual (read 2026-10-02), with the page URL.
+# The teacher's renderer prints "How to set it" only from this file. Keys match the settings fields in
+# prompts/teacher_schema.json plus a few menu items the fallback hints use. No dashes in the text.
+settings:
+  mode:
+    how: "Mode is set by the dials: shutter speed dial at A and aperture ring at A gives P, aperture ring set with shutter dial at A gives A, shutter dial set with aperture ring at A gives S, both set gives M."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/shooting_mode/
+  aperture:
+    how: "Aperture ring on the lens. A on the ring hands aperture to the camera."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/about_this_camera/parts/
+  shutter:
+    how: "Shutter speed dial on the top plate. For speeds faster than 1/4000 set the dial to 4000 and turn the rear command dial with SHUTTER TYPE set to ELECTRONIC SHUTTER or MECHANICAL + ELECTRONIC."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#shutter_type
+  shutter_type:
+    how: "SHOOTING SETTING > SHUTTER TYPE: MECHANICAL SHUTTER, ELECTRONIC SHUTTER or MECHANICAL + ELECTRONIC."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#shutter_type
+  iso:
+    how: "Lift and turn the sensitivity dial. A uses ISO AUTO SETTING, C hands ISO to the front command dial."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/iso/
+  iso_auto:
+    how: "SHOOTING SETTING > ISO AUTO SETTING, choose AUTO1, AUTO2 or AUTO3 and set DEFAULT SENSITIVITY, MAX. SENSITIVITY and MIN. SHUTTER SPEED, then put the sensitivity dial on A."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/iso/
+  exposure_comp:
+    how: "Exposure compensation dial. Set it to C to use the front command dial for the full range from -5 to +5 EV."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/exposure/
+  focus_mode:
+    how: "Focus mode selector on the lens barrel: S, C or M."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/autofocus/
+  af_area:
+    how: "AF/MF SETTING > AF MODE: SINGLE POINT, ZONE, WIDE/TRACKING or ALL. Move the point with the focus stick."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#af_mode
+  nd_filter:
+    how: "SHOOTING SETTING > ND FILTER, or rotate and hold the viewfinder selector (its default function button role)."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#nd_filter
+  teleconverter:
+    how: "SHOOTING SETTING > DIGITAL TELE-CONV. (50mm or 70mm), or assign DIGITAL TELE-CONV. to the control ring and turn it."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/digital_teleconverter/
+  film_simulation:
+    how: "IMAGE QUALITY SETTING > FILM SIMULATION, also on the Q menu."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#film_simulation
+  dynamic_range:
+    how: "IMAGE QUALITY SETTING > DYNAMIC RANGE: AUTO, 100%, 200% (ISO 250 or higher) or 400% (ISO 500 or higher)."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#dynamic_range
+  d_range_priority:
+    how: "IMAGE QUALITY SETTING > D RANGE PRIORITY: AUTO, STRONG, WEAK or OFF."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#d_range_priority
+  recipe_name:
+    how: "IMAGE QUALITY SETTING > SELECT CUSTOM SETTING, pick the bank you saved the recipe to."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#select_custom_setting
+  framing_guideline:
+    how: "SCREEN SET-UP > FRAMING GUIDELINE: GRID 9, GRID 24 or HD FRAMING, then show it with SCREEN SET-UP > DISP. CUSTOM SETTING."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#framing_guidline
+  electronic_level:
+    how: "SCREEN SET-UP > ELECTRONIC LEVEL SETTING: 2D shows a line that turns green when level, 3D also shows pitch."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#electronic_level_setting
+  is_mode:
+    how: "SHOOTING SETTING > IS MODE: CONTINUOUS, SHOOTING ONLY or OFF."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#is_mode
+  face_eye:
+    how: "AF/MF SETTING > FACE/EYE DETECTION SETTING, FACE DETECTION ON with EYE AUTO."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#face_eye_detection_setting
+  pre_af:
+    how: "AF/MF SETTING > PRE-AF ON."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#pre-af
+  focus_check:
+    how: "AF/MF SETTING > FOCUS CHECK ON, so turning the focus ring zooms in."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#focus_check
+  mf_assist:
+    how: "AF/MF SETTING > MF ASSIST: FOCUS PEAK HIGHLIGHT, DIGITAL SPLIT IMAGE or DIGITAL MICROPRISM."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#mf_assist
+  photometry:
+    how: "SHOOTING SETTING > PHOTOMETRY: MULTI, SPOT, AVERAGE or CENTER WEIGHTED. INTERLOCK SPOT AE & FOCUS AREA meters the focus frame."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#photometry
+  highlight_shadow:
+    how: "IMAGE QUALITY SETTING > TONE CURVE, HIGHLIGHTS and SHADOWS from -2 to +4."
+    url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#tone_curve

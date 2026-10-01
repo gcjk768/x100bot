@@ -144,11 +144,44 @@ class ClaudeLimits(BaseModel):
     max_critiques_per_day: int
 
 
+class TeacherLimits(BaseModel):
+    max_critiques_per_day: int = 15
+    max_followups_per_day: int = 40
+    max_questions_per_day: int = 20
+    max_series_per_day: int = 3
+    queue_max: int = 20
+
+
 class Limits(BaseModel):
     web: WebLimits
     openmeteo: OpenMeteoLimits
     telegram: TelegramLimits
     claude: ClaudeLimits
+    teacher: TeacherLimits = TeacherLimits()
+
+
+class TeacherCfg(BaseModel):
+    enabled: bool = True
+    model: str = "sonnet"
+    fallback_model: str = "haiku"
+    level: Literal["beginner", "intermediate", "advanced"] = "intermediate"
+    style: Literal["encouraging", "direct", "socratic"] = "encouraging"
+    default_detail: Literal["full", "quick"] = "full"
+    timeout_seconds: int = 300
+    session_days: int = 30
+    retention_days: int = 180
+    claude_long_edge_px: int = 2048
+    analysis_long_edge_px: int = 1024
+    overlay_long_edge_px: int = 1600
+    max_file_mb: int = 20
+    series_max_images: int = 8
+    album_debounce_seconds: int = 3
+    weekly_report_cron: str = "0 20 * * 0"
+    monthly_best_cron: str = "0 20 1 * *"
+    score_weights: dict[str, float] = {"composition": 0.25, "light": 0.25, "moment": 0.15, "exposure": 0.15,
+                                       "focus": 0.10, "colour": 0.10}
+    measurement_thresholds: dict[str, float] = {"highlights_clipped_pct": 1.0, "shadows_crushed_pct": 2.0, "cast_ab": 6.0,
+                                                "tilt_min_degrees": 0.7, "tilt_min_lines": 4, "blur_laplacian_min": 0}
 
 
 class RepairCfg(BaseModel):
@@ -167,6 +200,7 @@ class Settings(BaseModel):
     claude: ClaudeCfg
     limits: Limits
     repair: RepairCfg
+    teacher: TeacherCfg = TeacherCfg()
     root: Path = ROOT          # where camera/, library/ and prompts/ live
     data_root: Path | None = None
     bot_token: str = ""
@@ -188,6 +222,12 @@ FLOORS = [
     ("limits.telegram.max_per_minute", lambda s: s.limits.telegram.max_per_minute > 20, "must be at most 20"),
     ("limits.claude.max_critiques_per_day", lambda s: s.limits.claude.max_critiques_per_day > 30, "must be at most 30"),
     ("limits.claude.max_scheduled_calls_per_day", lambda s: s.limits.claude.max_scheduled_calls_per_day > 6, "must be at most 6"),
+    ("limits.teacher.max_critiques_per_day", lambda s: s.limits.teacher.max_critiques_per_day > 40, "must be at most 40"),
+    ("limits.teacher.max_followups_per_day", lambda s: s.limits.teacher.max_followups_per_day > 100, "must be at most 100"),
+    ("limits.teacher.max_questions_per_day", lambda s: s.limits.teacher.max_questions_per_day > 60, "must be at most 60"),
+    ("limits.teacher.max_series_per_day", lambda s: s.limits.teacher.max_series_per_day > 10, "must be at most 10"),
+    ("teacher.series_max_images", lambda s: s.teacher.series_max_images > 10, "must be at most 10"),
+    ("limits.teacher.queue_max", lambda s: s.limits.teacher.queue_max > 50, "must be at most 50"),
 ]
 
 

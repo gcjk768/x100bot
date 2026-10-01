@@ -17,3 +17,5 @@ Build order from the brief. STOP HERE after 3 and after the first real compose c
 Open items: `sources.firmware_page` URL (find during step 4), YouTube channel ids, `telegram.chat_id` and `owner_user_id` from the owner.
 
 Then the teacher add on, steps 1 to 6 of [[Teacher Spec]], with its own two STOP HERE points.
+
+Teacher: steps 1 to 3 done 2026-10-02 (STOP HERE, calibration with the owner's photos pending). Next: step 4 compare and series, step 5 ask/plan, assignment check, progress, weekly report, /forget; step 6 Docker (packages already in the Dockerfile) and README section.

@@ -65,7 +65,10 @@ class Bot:
 
     def handler(self, req: httpx.Request) -> httpx.Response:
         method = req.url.path.rsplit("/", 1)[-1]
-        body = json.loads(req.content) if req.content else {}
+        try:
+            body = json.loads(req.content) if req.content else {}
+        except ValueError:   # multipart uploads such as sendPhoto
+            body = {"multipart": True}
         self.calls.append((method, body))
         if self.script and self.script[0][0] in (method, "*"):
             _, status, resp = self.script.pop(0)
