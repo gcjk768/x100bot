@@ -1,5 +1,6 @@
 telegram:
-  chat_id: "@your_channel_or_numeric_id"    # the learning channel, one item per message
+  chat_id: "@your_channel_or_numeric_id"    # the learning channel, one item per message. TELEGRAM_CHAT_ID in .env overrides
+  message_thread_id: null                    # forum topic id when posting into a group topic. TELEGRAM_THREAD_ID overrides
   owner_user_id: 0                           # my Telegram user id. The bot answers nobody else
   admin_chat_id: ""                          # usually my private chat with the bot, for alerts. Empty means log only
   notify_types: [brief, golden_hour]         # these post with sound, all other types post silently
