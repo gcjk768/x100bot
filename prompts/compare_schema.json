@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "verdict": {"type": "string", "maxLength": 200},
+    "fix_applied": {"type": "boolean"},
+    "improved": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 4},
+    "still_to_fix": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 3},
+    "scores": {
+      "type": "object",
+      "properties": {
+        "composition": {"type": "integer", "minimum": 1, "maximum": 5},
+        "light": {"type": "integer", "minimum": 1, "maximum": 5},
+        "exposure": {"type": "integer", "minimum": 1, "maximum": 5},
+        "focus": {"type": "integer", "minimum": 1, "maximum": 5},
+        "colour": {"type": "integer", "minimum": 1, "maximum": 5},
+        "moment": {"type": "integer", "minimum": 1, "maximum": 5}
+      },
+      "required": ["composition", "light", "exposure", "focus", "colour", "moment"]
+    },
+    "next_step": {"type": "string", "maxLength": 300},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "strength_tags": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["verdict", "fix_applied", "improved", "still_to_fix", "scores", "next_step", "tags", "strength_tags"]
+}

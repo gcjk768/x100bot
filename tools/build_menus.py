@@ -51,10 +51,22 @@ def main(db_path=ROOT / "data" / "x100bot.db"):
                 continue
             seen.add(key)
             menus.append({"name": name, "section": h1, "url": f"{url}#{h['id']}"})
+    # every capitalised word in the manual's menu pages (option values such as GRID 9, AUTO1, MECHANICAL SHUTTER),
+    # so the compose guardrail can tell a manual term from an invented one
+    option_words = set()
+    for rel in MENU_PAGES:
+        url = BASE + rel
+        row = conn.execute("SELECT body_path FROM pages WHERE url=?", (url,)).fetchone()
+        soup = BeautifulSoup(Path(row[0]).read_text(encoding="utf-8"), "lxml")
+        strip_icons(soup)
+        main = soup.select_one("main") or soup.body
+        for w in re.findall(r"(?<![A-Za-z0-9])[A-Z][A-Z0-9./+()-]+(?![A-Za-z0-9])", main.get_text(" ")):
+            option_words.add(w.strip("().,"))
     out = ROOT / "camera" / "menus.yaml"
     header = ("# Every menu item name from the official X100VI manual, one entry per item, with the page and anchor.\n"
               "# Built by tools/build_menus.py from the cached manual pages. The compose guardrail reads it.\n")
-    out.write_text(header + yaml.safe_dump({"source": BASE, "items": menus}, sort_keys=False, allow_unicode=True),
+    out.write_text(header + yaml.safe_dump({"source": BASE, "items": menus, "option_words": sorted(w for w in option_words if w)},
+                                  sort_keys=False, allow_unicode=True),
                    encoding="utf-8")
     print(f"{len(menus)} menu items written to {out}")
 

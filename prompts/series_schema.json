@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "theme_seen": {"type": "string", "maxLength": 300},
+    "strongest_index": {"type": "integer", "minimum": 1},
+    "strongest_why": {"type": "string", "maxLength": 300},
+    "weakest_index": {"type": "integer", "minimum": 1},
+    "weakest_why": {"type": "string", "maxLength": 300},
+    "order": {"type": "array", "items": {"type": "integer", "minimum": 1}},
+    "per_image": {"type": "array", "items": {"type": "object", "properties": {"index": {"type": "integer", "minimum": 1}, "note": {"type": "string", "maxLength": 200}}, "required": ["index", "note"]}},
+    "consistency": {"type": "string", "maxLength": 300},
+    "missing_shot": {"type": "string", "maxLength": 300},
+    "exercise": {"type": "string", "maxLength": 300}
+  },
+  "required": ["theme_seen", "strongest_index", "strongest_why", "weakest_index", "weakest_why", "order", "per_image", "consistency", "missing_shot", "exercise"]
+}

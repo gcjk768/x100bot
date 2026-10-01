@@ -1,0 +1,508 @@
+# X100VI camera tips written during the build from the official manual pages (fujifilm-dsc.com, read 2026-10-02).
+# Each tip: topic, title, 2 to 5 facts taken from the page, the menu path as the manual writes it, the page URL,
+# and menu_item, the exact item name the loader checks for in the page text. No dashes in the text.
+tips:
+  - topic: focus modes
+    title: The focus mode selector does more than switch autofocus off
+    facts:
+      - "S (AF-S) locks focus while the shutter button is pressed halfway, for stationary subjects."
+      - "C (AF-C) keeps adjusting focus while the button is held halfway, for subjects in motion."
+      - "M lets you focus with the lens focus ring, for manual control or when autofocus cannot lock."
+    menu_path: "Focus mode selector on the lens barrel: S, C or M"
+    menu_item: focus mode selector
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/autofocus/
+  - topic: focus modes
+    title: PRE-AF focuses before you ask
+    facts:
+      - "With PRE-AF ON the camera keeps adjusting focus even when the shutter button is not pressed halfway, so it locks faster when you do press."
+      - "The manual says this helps prevent missed shots."
+      - "It increases the drain on the battery."
+    menu_path: "AF/MF SETTING > PRE-AF"
+    menu_item: PRE-AF
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#pre-af
+  - topic: focus modes
+    title: Pick the AF area for the scene
+    facts:
+      - "AF MODE chooses the autofocus area for focus modes S and C."
+      - "The specifications list the areas as SINGLE POINT, ZONE, WIDE/TRACKING and ALL."
+      - "ZONE CUSTOM SETTING lets you create up to three custom focus zones for ZONE."
+    menu_path: "AF/MF SETTING > AF MODE"
+    menu_item: AF MODE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#af_mode
+  - topic: zone focusing
+    title: Read the distance scale for zone focusing
+    facts:
+      - "In manual focus a white line shows the focus distance and a blue bar shows the depth of field, the range that appears in focus."
+      - "DEPTH-OF-FIELD SCALE chooses how that bar is drawn: FILM FORMAT BASIS gives a practical reference for prints, PIXEL BASIS a precision reference for high resolution screens."
+      - "If both AF DISTANCE INDICATOR and MF DISTANCE INDICATOR are selected in DISP. CUSTOM SETTING, the indicator also shows in the standard display."
+    menu_path: "AF/MF SETTING > DEPTH-OF-FIELD SCALE"
+    menu_item: DEPTH-OF-FIELD SCALE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#depth-of-field_scale
+  - topic: manual focus
+    title: FOCUS CHECK zooms in while you turn the ring
+    facts:
+      - "With FOCUS CHECK ON the display zooms in on the selected focus area when the focus ring is rotated in manual focus mode."
+      - "Pressing the center of the rear command dial cancels the zoom, and the zoom ratio can be changed with the rear command dial."
+      - "The zoom position follows the focus area you choose with the focus stick."
+    menu_path: "AF/MF SETTING > FOCUS CHECK"
+    menu_item: FOCUS CHECK
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#focus_check
+  - topic: manual focus
+    title: Choose your MF ASSIST view
+    facts:
+      - "DIGITAL SPLIT IMAGE shows a split image in the center of the frame, in MONOCHROME or COLOR; align its four parts to focus."
+      - "DIGITAL MICROPRISM shows a grid pattern that disappears when the subject is sharp."
+      - "FOCUS PEAK HIGHLIGHT heightens high contrast outlines, with a choice of color and peaking level."
+    menu_path: "AF/MF SETTING > MF ASSIST"
+    menu_item: MF ASSIST
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#mf_assist
+  - topic: manual focus
+    title: Back button focus while in manual
+    facts:
+      - "In manual focus mode, pressing a button assigned focus lock or AF-ON focuses on the subject in the focus area."
+      - "INSTANT AF SETTING chooses whether that press uses AF-S (focus once) or AF-C (focus while the button is held)."
+    menu_path: "AF/MF SETTING > INSTANT AF SETTING"
+    menu_item: INSTANT AF SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#instant-af_setting
+  - topic: manual focus
+    title: AF+MF lets you fine tune after autofocus
+    facts:
+      - "With AF+MF ON, once focus is locked you can end the lock and adjust focus by rotating the focus ring."
+      - "The previous focus mode returns if you do nothing for a set period after turning the ring."
+      - "DIGITAL SPLIT IMAGE and DIGITAL MICROPRISM cannot be used with it."
+    menu_path: "AF/MF SETTING > AF+MF"
+    menu_item: AF+MF
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#af-mf
+  - topic: focus modes
+    title: AF RANGE LIMITER speeds up focus
+    facts:
+      - "AF RANGE LIMITER limits the range of focus distances to increase focus speed."
+      - "CUSTOM lets you set a minimum and maximum, or choose two objects and limit focus to the distance between them."
+      - "PRESET1 and PRESET2 use preset ranges."
+    menu_path: "AF/MF SETTING > AF RANGE LIMITER"
+    menu_item: AF RANGE LIMITER
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#af_range_limitter
+  - topic: focus modes
+    title: Face and eye detection for portraits
+    facts:
+      - "When the camera detects faces it gives them priority over the background for focus and exposure."
+      - "EYE AUTO lets the camera choose the eye, or pick RIGHT EYE PRIORITY or LEFT EYE PRIORITY."
+      - "If the subject moves as you press the shutter, the face may not be where the green border showed."
+    menu_path: "AF/MF SETTING > FACE/EYE DETECTION SETTING"
+    menu_item: FACE/EYE DETECTION SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#face_eye_detection_setting
+  - topic: focus modes
+    title: RELEASE or FOCUS priority
+    facts:
+      - "RELEASE prioritises shutter response, so pictures can be taken when the camera is not in focus."
+      - "FOCUS prioritises focus, so pictures can only be taken when the camera is in focus."
+      - "The setting can be chosen separately for AF-S and AF-C."
+    menu_path: "AF/MF SETTING > RELEASE/FOCUS PRIORITY"
+    menu_item: RELEASE/FOCUS PRIORITY
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#release-focus_priority
+  - topic: focus modes
+    title: Fewer focus points means faster point selection
+    facts:
+      - "NUMBER OF FOCUS POINTS offers 117 POINTS in a 9 by 13 grid or 425 POINTS in a 17 by 25 grid."
+      - "It applies in manual focus mode and when SINGLE POINT is selected for AF MODE."
+    menu_path: "AF/MF SETTING > NUMBER OF FOCUS POINTS"
+    menu_item: NUMBER OF FOCUS POINTS
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#number_of_the_focus_points
+  - topic: focus modes
+    title: The focus stick, and wrapping the focus point
+    facts:
+      - "Tilt or press the focus stick to select the focus area; it also navigates the menus."
+      - "Press and hold the center of the stick, or use FOCUS LEVER SETTING, to choose its role."
+      - "WRAP FOCUS POINT chooses whether focus area selection stops at the display borders or wraps around to the other edge."
+    menu_path: "AF/MF SETTING > WRAP FOCUS POINT"
+    menu_item: WRAP FOCUS POINT
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#wrap_focus_point
+  - topic: ND filter
+    title: The built in ND filter is 4 stops
+    facts:
+      - "ND FILTER ON enables the built in neutral density filter and reduces exposure by the equivalent of 4 EV."
+      - "That allows slower shutter speeds or wider apertures with brightly lit subjects, to blur motion or soften backgrounds without overexposing."
+      - "By default, rotating and holding the viewfinder selector toggles the ND filter."
+    menu_path: "SHOOTING SETTING > ND FILTER"
+    menu_item: ND FILTER
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#nd_filter
+  - topic: auto ISO
+    title: Set a minimum shutter speed with ISO AUTO SETTING
+    facts:
+      - "ISO AUTO SETTING chooses the base sensitivity, maximum sensitivity and minimum shutter speed for the A position on the sensitivity dial, stored separately for AUTO1, AUTO2 and AUTO3."
+      - "DEFAULT SENSITIVITY ranges 125 to 12800, MAX. SENSITIVITY 400 to 12800, MIN. SHUTTER SPEED 1/2000 to 30 seconds or AUTO."
+      - "The defaults are DEFAULT SENSITIVITY 125 for all three, MAX. SENSITIVITY 800, 3200 and 12800, and MIN. SHUTTER SPEED AUTO."
+      - "Sensitivity is only raised above the default when the shutter speed needed would be slower than MIN. SHUTTER SPEED, and the camera may still go slower if the picture would otherwise be underexposed at the maximum."
+    menu_path: "SHOOTING SETTING > ISO AUTO SETTING"
+    menu_item: ISO AUTO SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/iso/
+  - topic: auto ISO
+    title: The A and C positions on the sensitivity dial
+    facts:
+      - "Lift and rotate the sensitivity dial to set ISO; A chooses auto according to ISO AUTO SETTING."
+      - "C hands ISO to the front command dial, with values from 64 to 51200 including the extended 64 to 100, 25600 and 51200."
+      - "Extended values may reduce dynamic range or increase mottling."
+    menu_path: "Sensitivity dial: lift and rotate; A for auto, C for the front command dial"
+    menu_item: sensitivity dial
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/iso/
+  - topic: shutter
+    title: Electronic shutter for silence and speed
+    facts:
+      - "SHUTTER TYPE offers MECHANICAL SHUTTER, ELECTRONIC SHUTTER and MECHANICAL + ELECTRONIC."
+      - "With the electronic shutter, speeds faster than 1/4000 s are chosen by turning the shutter speed dial to 4000 and then the rear command dial."
+      - "Moving subjects may show distortion, and banding or fog may appear under fluorescent or flickering light."
+      - "When shooting silently, respect your subjects' image rights and privacy."
+    menu_path: "SHOOTING SETTING > SHUTTER TYPE"
+    menu_item: SHUTTER TYPE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#shutter_type
+  - topic: metering
+    title: Meter where you focus
+    facts:
+      - "PHOTOMETRY chooses how the camera meters exposure; the specifications list MULTI, SPOT, AVERAGE and CENTER WEIGHTED."
+      - "INTERLOCK SPOT AE & FOCUS AREA ON meters the current focus frame when SPOT or MULTI metering is selected."
+    menu_path: "AF/MF SETTING > INTERLOCK SPOT AE & FOCUS AREA"
+    menu_item: INTERLOCK SPOT AE & FOCUS AREA
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#interlock_spot_ae-focus_area
+  - topic: exposure modes
+    title: Aperture priority and depth of field preview
+    facts:
+      - "In mode A you set the aperture on the aperture ring with the shutter speed dial at A, and the camera chooses the shutter speed."
+      - "If the correct exposure cannot be reached at that aperture, the shutter speed shows in red."
+      - "With PREVIEW DEPTH OF FIELD on a function button, pressing it stops the aperture down so you can preview depth of field."
+    menu_path: "Shutter speed dial to A, aperture ring to the aperture you want"
+    menu_item: Aperture-Priority AE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/shooting_mode/#aperture
+  - topic: exposure modes
+    title: Program shift in mode P
+    facts:
+      - "In mode P the camera chooses shutter speed and aperture; rotate the rear command dial to pick another pair that gives the same exposure."
+      - "Program shift is not available when an auto option is selected for DYNAMIC RANGE, with TTL flash, or in movie mode."
+      - "Turning the camera off cancels program shift."
+    menu_path: "Shutter speed dial to A and aperture ring to A, then the rear command dial"
+    menu_item: Program AE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/shooting_mode/#program
+  - topic: exposure compensation
+    title: The C position gives you five stops of compensation
+    facts:
+      - "Rotate the exposure compensation dial to adjust exposure; the preview may not reflect it when compensation exceeds plus or minus 3 EV or when 200% or 400% DYNAMIC RANGE is selected."
+      - "With the dial at C, the front command dial sets exposure compensation between minus 5 and plus 5 EV."
+      - "Pressing the center of the front command dial changes its role."
+    menu_path: "Exposure compensation dial, or C and the front command dial"
+    menu_item: exposure compensation dial
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/exposure/
+  - topic: dynamic range
+    title: DYNAMIC RANGE needs a higher ISO to work
+    facts:
+      - "Wider dynamic range settings reduce loss of detail in highlights for high contrast or backlit scenes."
+      - "200% is available from ISO 250 to 12800 and 400% from ISO 500 to 12800."
+      - "AUTO chooses 100% or 200% according to the subject and conditions."
+    menu_path: "IMAGE QUALITY SETTING > DYNAMIC RANGE"
+    menu_item: DYNAMIC RANGE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#dynamic_range
+  - topic: dynamic range
+    title: D RANGE PRIORITY takes over the tone curve
+    facts:
+      - "D RANGE PRIORITY reduces loss of detail in highlights and shadows for high contrast scenes, with AUTO, STRONG, WEAK and OFF."
+      - "WEAK needs ISO 250 or higher, STRONG needs ISO 500 or higher."
+      - "With anything other than OFF, TONE CURVE and DYNAMIC RANGE are adjusted automatically; choose OFF to set them yourself."
+    menu_path: "IMAGE QUALITY SETTING > D RANGE PRIORITY"
+    menu_item: D RANGE PRIORITY
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#d_range_priority
+  - topic: stabilisation
+    title: IS MODE for handheld night frames
+    facts:
+      - "CONTINUOUS keeps image stabilization on; SHOOTING ONLY enables it only when the shutter button is pressed halfway in focus mode C or when the shutter is released."
+      - "OFF turns stabilization off and shows an indicator in the display."
+      - "Vibration or camera sounds may be noticeable as stabilization works."
+    menu_path: "SHOOTING SETTING > IS MODE"
+    menu_item: IS MODE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#is_mode
+  - topic: digital teleconverter
+    title: Frame tighter with the digital teleconverter
+    facts:
+      - "The digital teleconverter offers Standard (35 mm), 50 mm and 70 mm in 35 mm format terms."
+      - "Assign DIGITAL TELE-CONV. to the control ring and choose the zoom angle by turning the ring."
+      - "RAW pictures cannot be magnified; apply RAW CONVERSION with DIGITAL TELE-CONV. ON afterwards to save magnified copies."
+      - "Image size may change when it is used."
+    menu_path: "SHOOTING SETTING > DIGITAL TELE-CONV., or the control ring"
+    menu_item: Digital Teleconverter
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/taking_photo/digital_teleconverter/
+  - topic: digital teleconverter
+    title: Give the control ring one job
+    facts:
+      - "CONTROL RING SETTING assigns STANDARD, WHITE BALANCE, FILM SIMULATION, DIGITAL TELE-CONV. or OFF to the control ring."
+      - "Pressing the control ring options button, Fn2, also changes the assignment."
+    menu_path: "BUTTON/DIAL SETTING > CONTROL RING SETTING"
+    menu_item: CONTROL RING SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/button-dial_setting/#control_ring_setting
+  - topic: digital teleconverter
+    title: SPORTS FINDER MODE is a 1.29 times crop
+    facts:
+      - "SPORTS FINDER MODE takes pictures using a 1.29 times crop in the center of the display, shown by a frame, for moving subjects."
+      - "IMAGE SIZE is fixed while it is on, and it is not available in modes that offer an electronic shutter."
+    menu_path: "SHOOTING SETTING > SPORTS FINDER MODE"
+    menu_item: SPORTS FINDER MODE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#sports
+  - topic: framing
+    title: Turn on the thirds grid
+    facts:
+      - "FRAMING GUIDELINE offers GRID 9 for rule of thirds composition, GRID 24 as a six by four grid, and HD FRAMING for a 16 to 9 crop."
+      - "Guides are not shown at default settings; enable them in SCREEN SET-UP > DISP. CUSTOM SETTING."
+    menu_path: "SCREEN SET-UP > FRAMING GUIDELINE"
+    menu_item: FRAMING GUIDELINE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#framing_guidline
+  - topic: framing
+    title: Level horizons with the virtual horizon
+    facts:
+      - "ELECTRONIC LEVEL SETTING chooses the virtual horizon display: 2D shows a white line that turns green when the camera is level, 3D also shows tilt forward and back."
+      - "When set to 3D the camera switches to the EVF and the OVF is not available."
+      - "ELECTRONIC LEVEL SWITCH can go on a function button to toggle 2D and 3D."
+    menu_path: "SCREEN SET-UP > ELECTRONIC LEVEL SETTING"
+    menu_item: ELECTRONIC LEVEL SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#electronic_level_setting
+  - topic: viewfinder
+    title: Choose when the viewfinder and the screen are on
+    facts:
+      - "VIEW MODE SETTING offers EYE SENSOR, LCD ONLY, VIEWFINDER ONLY, VIEWFINDER ONLY + eye sensor, and EYE SENSOR + LCD IMAGE DISP."
+      - "Shooting and playback can use different display modes."
+      - "VIEW MODE SETTING can be assigned to a function button to switch between the viewfinder and the LCD monitor."
+    menu_path: "SCREEN SET-UP > VIEW MODE SETTING"
+    menu_item: VIEW MODE SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/about_this_camera/display/#choosing_display_mode
+  - topic: viewfinder
+    title: OVF, EVF and the little rangefinder window
+    facts:
+      - "The viewfinder selector switches between the electronic viewfinder (EVF) and the optical viewfinder (OVF)."
+      - "A small electronic rangefinder (ERF) window can be displayed inside the OVF."
+      - "Viewfinder focus is adjusted with the diopter adjustment control."
+    menu_path: "Viewfinder selector on the front of the camera"
+    menu_item: viewfinder selector
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/about_this_camera/parts/#viewfinder
+  - topic: viewfinder
+    title: NATURAL LIVE VIEW shows the scene, not the recipe
+    facts:
+      - "With NATURAL LIVE VIEW ON the effects of film simulation and white balance are not shown in the monitor, but shadows in low contrast or backlit scenes become easier to see."
+      - "Colors and tone then differ from the final picture, although monochrome and sepia settings are still shown."
+      - "OFF previews the effects of your settings."
+    menu_path: "SCREEN SET-UP > NATURAL LIVE VIEW"
+    menu_item: NATURAL LIVE VIEW
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#natural_live_view
+  - topic: viewfinder
+    title: Large indicators in the viewfinder
+    facts:
+      - "LARGE INDICATORS MODE(EVF/OVF) ON displays large indicators in the optical or electronic viewfinder."
+      - "Choose which indicators with SCREEN SET-UP > LARGE INDICATORS DISP. SETTING; some icons are hidden when it is on."
+      - "On a function button it toggles on and off."
+    menu_path: "SCREEN SET-UP > LARGE INDICATORS MODE(EVF/OVF)"
+    menu_item: LARGE INDICATORS MODE(EVF/OVF)
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#large_ind_mode_evf
+  - topic: viewfinder
+    title: Set the viewfinder and screen displays separately
+    facts:
+      - "The DISP/BACK button controls which indicators appear in the viewfinder and on the LCD monitor."
+      - "Indicators for the EVF, OVF and LCD must be selected separately; put your eye to the viewfinder and press DISP/BACK to set the viewfinder ones."
+    menu_path: "DISP/BACK button, with your eye at the viewfinder for the EVF and OVF"
+    menu_item: DISP/BACK
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/about_this_camera/display/#disp_back
+  - topic: custom settings
+    title: Seven banks for your recipes
+    facts:
+      - "SELECT CUSTOM SETTING recalls settings saved to banks CUSTOM 1 through CUSTOM 7."
+      - "Choose NOTHING SELECTED if you would prefer not to recall saved settings."
+      - "The banks are saved with EDIT/SAVE CUSTOM SETTING."
+    menu_path: "IMAGE QUALITY SETTING > SELECT CUSTOM SETTING"
+    menu_item: SELECT CUSTOM SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#select_custom_setting
+  - topic: custom settings
+    title: Stop a bank changing under you
+    facts:
+      - "AUTO UPDATE CUSTOM SETTING ENABLE applies changes to banks CUSTOM 1 through CUSTOM 7 automatically."
+      - "DISABLE keeps the saved bank as it is; changes must be applied manually in EDIT/SAVE CUSTOM SETTING, where edited items show red dots."
+    menu_path: "IMAGE QUALITY SETTING > AUTO UPDATE CUSTOM SETTING"
+    menu_item: AUTO UPDATE CUSTOM SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#auto_update_custom_setting
+  - topic: film simulation
+    title: Three film simulations from one shutter press
+    facts:
+      - "With film simulation bracketing the camera takes one shot and processes it into copies with different film simulations."
+      - "The three film simulations are chosen in SHOOTING SETTING > FILM SIMULATION BKT."
+      - "Bracketing is selected with the DRIVE/DELETE button in the drive mode menu."
+    menu_path: "SHOOTING SETTING > FILM SIMULATION BKT"
+    menu_item: FILM SIMULATION BKT
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#film_simulation_bkt
+  - topic: file format
+    title: JPEG or HEIF, and what HEIF switches off
+    facts:
+      - "SELECT JPEG/HEIF chooses the recording format; HEIF compresses well but has limited options for viewing and sharing."
+      - "Selecting HEIF disables CLARITY and sets COLOR SPACE to sRGB."
+      - "HEIF files are stored with the extension .HIF and must be renamed .HEIC to view on a computer, which happens automatically over USB."
+    menu_path: "IMAGE QUALITY SETTING > SELECT JPEG/HEIF"
+    menu_item: SELECT JPEG/HEIF
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#jpeg_heif
+  - topic: file format
+    title: CLARITY costs you time between shots
+    facts:
+      - "CLARITY increases definition while changing highlight and shadow tones as little as possible, from minus 5 to plus 5."
+      - "Any setting other than 0 increases the time needed to save each shot."
+    menu_path: "IMAGE QUALITY SETTING > CLARITY"
+    menu_item: CLARITY
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#clarity
+  - topic: file format
+    title: RAW on demand with a function button
+    facts:
+      - "IMAGE QUALITY offers FINE, NORMAL, FINE+RAW, NORMAL+RAW and RAW."
+      - "Assign RAW to a function button to toggle RAW for a single shot: press once to add or drop RAW, press again to return."
+    menu_path: "IMAGE QUALITY SETTING > IMAGE QUALITY"
+    menu_item: IMAGE QUALITY
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/image_quality_setting/#image_quality
+  - topic: quick menu
+    title: Make the Q menu yours
+    facts:
+      - "Press Q during shooting to open the quick menu, highlight with the focus stick and change with the rear command dial."
+      - "Press and hold Q while the quick menu is shown to jump to EDIT/SAVE CUSTOM SETTING."
+      - "Press and hold Q during shooting to edit which items the quick menu holds, or use BUTTON/DIAL SETTING > EDIT/SAVE QUICK MENU."
+    menu_path: "Q button; BUTTON/DIAL SETTING > EDIT/SAVE QUICK MENU"
+    menu_item: EDIT/SAVE QUICK MENU
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/shortcuts/quick_menu/
+  - topic: function buttons
+    title: What the buttons do out of the box
+    facts:
+      - "Defaults: the AEL/AFL button is AE/AF LOCK, the center of the rear command dial is FOCUS CHECK, Fn1 is FACE DETECTION ON/OFF, Q is QUICK MENU, Fn2 is CONTROL RING SETTING, and rotating and holding the viewfinder selector is ND FILTER."
+      - "Change them in BUTTON/DIAL SETTING > FUNCTION (Fn) SETTING."
+      - "Touch function gestures T-Fn1 to T-Fn4 are off by default and are enabled in TOUCH SCREEN SETTING > TOUCH FUNCTION."
+    menu_path: "BUTTON/DIAL SETTING > FUNCTION (Fn) SETTING"
+    menu_item: FUNCTION (Fn) SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/shortcuts/function_buttons/
+  - topic: my menu
+    title: Up to 16 items in MY MENU
+    facts:
+      - "MY MENU SETTING in USER SETTING adds items with ADD ITEMS, reorders with RANK ITEMS and removes with REMOVE ITEMS."
+      - "Items that can be added are highlighted in blue, and items already in my menu show check marks."
+      - "My menu can hold up to 16 items."
+    menu_path: "USER SETTING > MY MENU SETTING"
+    menu_item: MY MENU SETTING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/shortcuts/my_menu/
+  - topic: touch screen
+    title: Decide what a tap does
+    facts:
+      - "TOUCH SCREEN MODE offers TOUCH SHOOTING (tap to focus and release), AF (tap to focus, with AF OFF to unlock), AREA (tap to move the focus frame) and OFF."
+      - "In manual focus mode a tap focuses on the selected subject with autofocus."
+      - "To disable touch controls entirely, set BUTTON/DIAL SETTING > TOUCH SCREEN SETTING to OFF."
+    menu_path: "AF/MF SETTING > TOUCH SCREEN MODE"
+    menu_item: TOUCH SCREEN MODE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/af_mf_setting/#touch_panel
+  - topic: battery
+    title: PERFORMANCE trades battery for speed
+    facts:
+      - "BOOST improves focus and viewfinder display performance and drains the battery faster than NORMAL."
+      - "ECONOMY limits autofocus and viewfinder performance for better battery endurance than NORMAL."
+      - "The specifications give about 310 frames with the EVF and 450 with the OVF in NORMAL."
+    menu_path: "POWER MANAGEMENT > PERFORMANCE"
+    menu_item: PERFORMANCE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/power_management/#power_management
+  - topic: battery
+    title: AUTO POWER OFF saves the battery on long walks
+    facts:
+      - "AUTO POWER OFF sets how long the camera waits before turning off when nothing is pressed: 5 MIN, 2 MIN, 1 MIN, 30 SEC, 15 SEC or OFF."
+      - "Shorter times increase battery life; with OFF you must turn the camera off yourself."
+    menu_path: "POWER MANAGEMENT > AUTO POWER OFF"
+    menu_item: AUTO POWER OFF
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/power_management/#auto_power_off
+  - topic: gear care
+    title: Let the camera clean its own sensor
+    facts:
+      - "SENSOR CLEANING can run immediately with OK, WHEN SWITCHED ON, or WHEN SWITCHED OFF."
+      - "Cleaning on switch off is skipped when the camera turns off in playback mode."
+      - "The manual notes that sensor cleaning does not completely remove dust."
+    menu_path: "USER SETTING > SENSOR CLEANING"
+    menu_item: SENSOR CLEANING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/user_setting/#sensor_cleaning
+  - topic: culling
+    title: Rate frames in camera before you cull
+    facts:
+      - "RATING in the playback menu gives pictures 0 to 5 stars: the front command dial picks the picture and the rear command dial the rating."
+      - "The rating dialog can also be opened with the AEL/AFL button in single, nine or hundred frame playback."
+      - "Protected pictures, movies and pictures from other cameras cannot be rated."
+    menu_path: "Playback menu > RATING"
+    menu_item: RATING
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/playback/menu_playback/#rating
+  - topic: workflow
+    title: Put your name in every file
+    facts:
+      - "COPYRIGHT INFO adds copyright information as Exif tags to new images as they are taken."
+      - "ENTER AUTHOR'S INFO stores the creator's name and ENTER COPYRIGHT INFO the copyright holder."
+      - "Changes apply only to pictures taken after you make them."
+    menu_path: "SAVE DATA SET-UP > COPYRIGHT INFO"
+    menu_item: COPYRIGHT INFO
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/save_data_set-up/#copyright_info
+  - topic: workflow
+    title: Keep file numbers continuous for your backups
+    facts:
+      - "FRAME NO. CONTINUOUS keeps numbering going from the last file number used, which reduces duplicate file names."
+      - "RENEW resets numbering to 0001 after formatting or when a new card is inserted."
+      - "If the frame number reaches 999 and 9999 the shutter is disabled until a formatted card is inserted."
+    menu_path: "SAVE DATA SET-UP > FRAME NO."
+    menu_item: FRAME NO.
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/save_data_set-up/#frame_no
+  - topic: workflow
+    title: Format with two buttons
+    facts:
+      - "USER SETTING > FORMAT deletes all data on the card, including protected pictures, so copy important files first."
+      - "The format menu can also be opened by holding the center of the rear command dial while holding the DRIVE/DELETE button."
+      - "Do not open the battery chamber cover during formatting."
+    menu_path: "USER SETTING > FORMAT"
+    menu_item: FORMAT
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/user_setting/#format
+  - topic: travel
+    title: Switch time zones when you travel
+    facts:
+      - "TIME DIFFERENCE switches the clock between your home time zone and the local time at your destination."
+      - "Set your home zone with AREA SETTING first, then choose LOCAL with the focus stick."
+      - "With LOCAL selected an indicator shows in yellow for about three seconds when the camera turns on."
+    menu_path: "USER SETTING > TIME DIFFERENCE"
+    menu_item: TIME DIFFERENCE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/user_setting/#time_difference
+  - topic: exposure lock
+    title: Lock exposure on a half press
+    facts:
+      - "SHUTTER AE ON locks exposure while the shutter button is pressed halfway."
+      - "The setting for AF-C can be adjusted separately from S and M."
+      - "Choose OFF to let the camera adjust exposure before each shot in a burst."
+    menu_path: "BUTTON/DIAL SETTING > SHUTTER AE"
+    menu_item: SHUTTER AE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/button-dial_setting/#shutter_ae
+  - topic: self timer
+    title: Two seconds against camera shake
+    facts:
+      - "SELF-TIMER 2 SEC releases the shutter two seconds after you press, to reduce blur from the camera moving when the button is pressed."
+      - "10 SEC is for photographs you want to appear in yourself."
+      - "Press DISP/BACK to stop the timer, and note it turns off when the camera is turned off."
+    menu_path: "SHOOTING SETTING > SELF-TIMER"
+    menu_item: SELF-TIMER
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#self-timer
+  - topic: artificial light
+    title: FLICKER REDUCTION under fluorescent light
+    facts:
+      - "FLICKER REDUCTION reduces flicker in pictures and the display under fluorescent and similar lighting, with ALL FRAMES, FIRST FRAME or OFF."
+      - "It increases the time needed to record pictures and is set to OFF when the electronic shutter is used."
+    menu_path: "SHOOTING SETTING > FLICKER REDUCTION"
+    menu_item: FLICKER REDUCTION
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_shooting/shooting_setting/#flicker_reduction
+  - topic: manual exposure
+    title: Preview exposure in mode M
+    facts:
+      - "PREVIEW EXP./WB IN MANUAL MODE enables exposure and white balance preview in manual exposure mode."
+      - "PREVIEW WB previews white balance only, for when exposure will change during shooting, such as flash in daylight."
+      - "OFF disables both previews."
+    menu_path: "SCREEN SET-UP > PREVIEW EXP./WB IN MANUAL MODE"
+    menu_item: PREVIEW EXP./WB IN MANUAL MODE
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#preview_exp_wb_in_manual_mode
+  - topic: playback
+    title: Decide how long each shot stays on screen
+    facts:
+      - "IMAGE DISP. sets how long pictures are displayed after shooting: CONTINUOUS, 1.5 SEC, 0.5 SEC or OFF."
+      - "In CONTINUOUS, pressing the center of the focus stick zooms in on the active focus point."
+      - "Colors may differ slightly from the final image."
+    menu_path: "SCREEN SET-UP > IMAGE DISP."
+    menu_item: IMAGE DISP.
+    manual_url: https://fujifilm-dsc.com/en/manual/x100vi/menu_setup/screen_set-up/#image_disp

@@ -68,7 +68,9 @@ def main(argv=None) -> None:
     po = sub.add_parser("post", help="post one queued slot now")
     po.add_argument("--slot", required=True, help="HH")
     po.add_argument("--date", default=None)
-    for name in ("serve", "sources", "seed", "status", "test-telegram", "eval", "firmware"):
+    sd = sub.add_parser("seed", help="build the starting library once")
+    sd.add_argument("--only", choices=["recipes", "tips", "people", "videos"], default=None)
+    for name in ("serve", "sources", "status", "test-telegram", "eval", "firmware"):
         sub.add_parser(name)
     a = ap.parse_args(argv)
     try:
@@ -90,7 +92,7 @@ def main(argv=None) -> None:
         print(run_sources(s))
     elif a.cmd == "seed":
         from .library.seed import run_seed
-        print(run_seed(s))
+        print(run_seed(s, only=a.only))
     elif a.cmd == "firmware":
         from .scheduler import firmware_job
         firmware_job(s)
