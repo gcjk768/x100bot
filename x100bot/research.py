@@ -102,6 +102,11 @@ def run_research(x) -> dict | None:
     brief = fill((root / "prompts" / "research_brief.md").read_text(encoding="utf-8"), date=x.lim.today(),
                  needed_json=json.dumps(need), themes_json=json.dumps(stdin["themes"]))
     claude = Claude(s, x.lim, x.lim.tz)
+    try:
+        x.lim.check("claude")
+    except LimitError as ex:
+        log.info("research skipped: %s", ex)
+        return {"status": "skipped", "reason": str(ex)}
     res = claude.run_with_retry("claude", brief, stdin, alert=lambda t: x.alert("research_fallback", t),
                                 schema=root / "prompts" / "research_schema.json",
                                 timeout=s.claude.research.timeout_seconds,
