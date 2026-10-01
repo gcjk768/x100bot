@@ -7,6 +7,7 @@ import json
 import logging
 import shutil
 import tempfile
+import threading
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -26,6 +27,33 @@ BUTTON_QUESTIONS = {"s": "Explain the top fix again in simpler words, with fewer
                     "d": "Go deeper on composition and light, as for an advanced photographer",
                     "w": "Explain each score in one sentence against the rubric",
                     "r": "Give me a step by step plan to reshoot this tomorrow"}
+
+
+class ChatAction:
+    """Keeps a chat action ('typing' or 'upload_photo') alive while a job works, refreshed every 8 seconds so it
+    never crowds the Telegram budget. Best effort: a failed refresh is logged and ignored."""
+
+    def __init__(self, x, chat, action: str = "typing", every: float = 8.0):
+        self.x, self.chat, self.action, self.every = x, chat, action, every
+        self.stop = threading.Event()
+
+    def _loop(self):
+        while not self.stop.is_set():
+            try:
+                self.x.tg.call("sendChatAction", chat_id=self.chat, action=self.action)
+            except Exception as ex:   # noqa: BLE001
+                log.debug("chat action skipped: %s", ex)
+            self.stop.wait(self.every)
+
+    def __enter__(self):
+        threading.Thread(target=self._loop, name="chat-action", daemon=True).start()
+        return self
+
+    def set(self, action: str) -> None:
+        self.action = action
+
+    def __exit__(self, *exc):
+        self.stop.set()
 
 
 def setting(x, key: str, default: str) -> str:
@@ -166,7 +194,7 @@ class Teacher:
                 target = c.get("value")
                 if target == "threshold":
                     target = th.get(c["metric"].split(".")[-1])
-                op = c["op"]
+                op = str(c["op"]).lower()   # YAML reads a bare true/false as a boolean
                 if v is None or (op in ("gt", "lt", "ge", "le") and target is None):
                     ok = False
                 elif op == "true":
@@ -203,8 +231,11 @@ class Teacher:
                                                                caption, json.dumps(flags))).lastrowid
         folder = self.data / str(cid)
         folder.mkdir(parents=True, exist_ok=True)
-        x.tg.call("sendChatAction", chat_id=chat, action="upload_photo")
-        # download
+        with ChatAction(x, chat, "upload_photo") as action:
+            return self._critique(job, p, cid, folder, chat, caption, flags, action)
+
+    def _critique(self, job, p, cid, folder, chat, caption, flags, action):
+        x = self.x
         data = x.tg.get_file_bytes(p["file_id"])
         original = folder / ("original" + p.get("suffix", ".jpg"))
         original.write_bytes(data)
@@ -220,6 +251,7 @@ class Teacher:
         recipe_names = {r["name"] for r in x.conn.execute("SELECT name FROM recipes")}
         people = {r["name"] for r in x.conn.execute("SELECT name FROM people")}
         used_fallback, result, res = False, None, None
+        action.set("typing")
         try:
             result, res = self.critique_call(folder, stdin, flags, m["tilt"], recipe_names, people)
         except UsageLimit as ex:
@@ -351,6 +383,11 @@ class Teacher:
                  "menu_names": self.menu_names(), "earlier_critique": json.loads(c["result_json"] or "{}")}
         prompt = fill((self.root / "prompts" / "followup_brief.md").read_text(encoding="utf-8"), question=question)
         fresh = not c["session_id"] or (x.lim.clock() - c["created_at"]) > self.cfg.session_days * 86400
+        with ChatAction(x, p["chat_id"], "typing"):
+            return self._followup(p, c, folder, question, stdin, prompt, fresh)
+
+    def _followup(self, p, c, folder, question, stdin, prompt, fresh):
+        x = self.x
         try:
             try:
                 if fresh:

@@ -15,17 +15,17 @@ rules:
     settings: {exposure_comp: "+2/3"}
     menu: [exposure_comp]
   - tag: tilted_horizon
-    when: [{metric: tilt.tilted, op: true}]
+    when: [{metric: tilt.tilted, op: "true"}]
     advice: "The horizon or the verticals lean. Turn on the virtual horizon and the thirds grid so you see it before you press the shutter."
     settings: {}
     menu: [electronic_level, framing_guideline]
   - tag: camera_shake
-    when: [{metric: sharpness.blur_suspect, op: true}, {metric: exif.shutter, op: gt, value: 0.008}]
+    when: [{metric: sharpness.blur_suspect, op: "true"}, {metric: exif.shutter, op: gt, value: 0.008}]
     advice: "The sharpest part of the frame is still soft and the shutter was slower than 1/125. Let the camera keep the shutter up with an ISO AUTO SETTING that has a minimum shutter speed of 1/250."
     settings: {iso: "AUTO2, min shutter 1/250"}
     menu: [iso_auto]
   - tag: missed_focus
-    when: [{metric: sharpness.blur_suspect, op: true}, {metric: exif.shutter, op: le, value: 0.008}]
+    when: [{metric: sharpness.blur_suspect, op: "true"}, {metric: exif.shutter, op: le, value: 0.008}]
     advice: "Even the sharpest area is soft although the shutter was fast, so focus probably landed elsewhere. Use SINGLE POINT and put the point on the subject, or zone focus with the distance scale for street scenes."
     settings: {af_area: "SINGLE POINT"}
     menu: [af_area, focus_mode]
