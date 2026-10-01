@@ -22,6 +22,9 @@ Every website, Open-Meteo, Telegram and Claude call goes through `x100bot/rateli
 ## Data
 SQLite at `data/x100bot.db` (WAL), page cache in `data/pages/`, locks in `data/locks/`. Schema in `x100bot/db.py`.
 
+## Message style
+Global card style (see `~/.claude/CLAUDE.md`), one fixed emoji per type in `SECTION_TITLES` (`x100bot/render.py`). Hashtags at the end of each card. `{no_x}` placeholders give a line variant for when Claude's text is missing.
+
 ## Planner rules worth knowing
 - Recipe of the day in the brief is the day's recipe post that best fits the main condition, so it also gets its own card.
 - A slot with no verified material becomes a learning tip on an unused topic (never a repeat inside a repeat window) and raises one `stock_low` alert.

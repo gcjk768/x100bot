@@ -191,7 +191,7 @@ def test_renderer_never_prints_none_and_stays_short(ctx):
 def test_no_dashes_in_prose_lines(ctx):
     for sl, text, _ in full_day(ctx):
         for line in text.splitlines():
-            if "href=" in line:
+            if "href=" in line or line.startswith("━"):
                 continue
             assert not DASHES.search(line), line
 
@@ -201,7 +201,7 @@ def test_one_message_per_item_with_its_own_preview(ctx):
     assert len(rows) == 16
     for sl, text, preview in rows:
         if sl.type == "recipe":
-            assert preview == sl.facts["source_url"] and text.count("<b>") == 1
+            assert preview == sl.facts["source_url"] and text.count("<b>") == 2   # section title and recipe name
         elif sl.type == "photographer":
             assert preview == sl.facts["official_url"]
         elif sl.type in ("brief", "camera_tip", "drill", "learning_tip", "review", "weekly_recap", "golden_hour"):
@@ -210,7 +210,7 @@ def test_one_message_per_item_with_its_own_preview(ctx):
 
 def test_render_drops_empty_lines_and_escapes():
     text = render.render("learning_tip", {"topic": "a & b", "title": "<script>", "body": None, "action": ""})
-    assert text == "#learn  a &amp; b\n<b>&lt;script&gt;</b>"
+    assert text == "📚 <b>LEARN</b> · a &amp; b\n\n📚 <b>&lt;script&gt;</b>\n#learn"
 
 
 def test_recipe_lines_print_settings_exactly(ctx):
