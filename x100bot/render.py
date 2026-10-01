@@ -7,122 +7,147 @@ from string import Formatter
 
 from .telegram import MAX_LEN, esc, esc_attr
 
-# {name} is escaped text; {name:link} is used inside href and must be a URL. Lines are joined with newlines.
+# Card style shared by all of the owner's bots: emoji + <b>TITLE</b> · subtitle header, one block per item with emoji
+# led detail lines, copyable values in <code>, hints in <i>, a divider between groups, short link labels, and
+# secondary detail in <blockquote expandable>. One fixed emoji per section type, defined once here.
+SECTION_TITLES = {
+    "recipe": "🎞 <b>RECIPE</b>", "brief": "🌅 <b>TODAY</b>", "composition": "🖼 <b>COMPOSITION</b>",
+    "photographer": "👤 <b>PHOTOGRAPHER</b>", "camera_tip": "📷 <b>X100VI TIP</b>", "video_lesson": "▶️ <b>VIDEO LESSON</b>",
+    "drill": "⏱ <b>DRILL</b>", "golden_hour": "🌇 <b>GOLDEN HOUR</b>", "learning_tip": "📚 <b>LEARN</b>",
+    "review": "🔍 <b>REVIEW</b>", "weekly_recap": "📆 <b>WEEKLY RECAP</b>",
+}
+DIVIDER = "━━━━━━━━━━━━━━━━"
+T = SECTION_TITLES
+
+# {name} is escaped text; {name:link} is used inside href and must be a URL. {no_name} is a single space when
+# {name} is empty, so a line can have a variant without the Claude sentence. Lines are joined with newlines.
 TEMPLATES: dict[str, list[str]] = {
     "recipe": [
-        "#recipe  Film recipe for {light_label}",
-        "<b>{recipe_name}</b>",
-        "by {author}, {compat_label}",
-        "{bank_note}",
+        f"{T['recipe']} · {{light_label}}",
         "",
-        "Film Simulation: {film_simulation}",
-        "Grain: {grain}",
-        "Color Chrome Effect: {cce}",
-        "Color Chrome FX Blue: {ccfxb}",
-        "White Balance: {white_balance}",
-        "Monochromatic Color: {mono_color}",
-        "Dynamic Range: {dynamic_range}",
-        "D Range Priority: {d_range_priority}",
-        "Highlight: {highlight}   Shadow: {shadow}",
-        "Color: {color}   Sharpness: {sharpness}",
-        "Sharpness: {sharpness_only}",
-        "High ISO NR: {nr}   Clarity: {clarity}",
-        "ISO: {iso}",
-        "Exposure Compensation: {exposure}",
-        "{adaptation_note}",
-        "",
-        "Best for: {best_for}",
-        "Why it works: {why}",
-        "Try it today: {try_today}",
-        "Save it: IMAGE QUALITY SETTING, EDIT/SAVE CUSTOM SETTING, then choose a CUSTOM slot.",
-        '<a href="{source_url:link}">Full recipe and sample photos</a>',
+        "🎞 <b>{recipe_name}</b> · by {author}, {compat_label}",
+        "🔖 <i>{bank_note}</i>",
+        "🎬 Film Simulation <code>{film_simulation}</code>",
+        "⚙️ Grain <code>{grain}</code> · Color Chrome <code>{cce}</code> · FX Blue <code>{ccfxb}</code>",
+        "🌡 White Balance <code>{white_balance}</code>",
+        "🎨 Monochromatic Color <code>{mono_color}</code>",
+        "📈 Dynamic Range <code>{dynamic_range}</code> · Highlight <code>{highlight}</code> · Shadow <code>{shadow}</code>",
+        "📈 D Range Priority <code>{d_range_priority}</code>",
+        "🎨 Color <code>{color}</code> · Sharpness <code>{sharpness}</code> · Clarity <code>{clarity}</code> · NR <code>{nr}</code>",
+        "🎨 Sharpness <code>{sharpness_only}</code> · Clarity <code>{clarity}</code> · NR <code>{nr}</code>",
+        "📷 ISO <code>{iso}</code> · Exposure <code>{exposure}</code>",
+        DIVIDER,
+        "✨ Best for: {best_for}",
+        "💡 Why it works: {why}",
+        "🎯 Try it today: {try_today}",
+        '<a href="{source_url:link}">Full recipe and sample photos</a>  ·  #recipe',
+        "<blockquote expandable>Save it: IMAGE QUALITY SETTING, EDIT/SAVE CUSTOM SETTING, then choose a CUSTOM slot. "
+        "{adaptation_note}</blockquote>",
+        "<blockquote expandable>Save it: IMAGE QUALITY SETTING, EDIT/SAVE CUSTOM SETTING, then choose a CUSTOM slot."
+        "{no_adaptation_note}</blockquote>",
     ],
     "brief": [
-        "#today  {weekday} {date}",
-        "<b>{headline}</b>",
-        "Sunrise {sunrise}, golden hour {golden_evening_start} to {sunset}, blue hour until {blue_end}",
-        "Morning {weather_morning}, afternoon {weather_afternoon}, evening {weather_evening}",
-        "{forecast_note}",
-        "Week {week_number}: {theme}",
-        "Today's assignment: {assignment}",
-        "Recipe of the day: {recipe_name}, {film_simulation}. {why_today}",
-        "Recipe of the day: {recipe_name}, {film_simulation}.{no_why_today}",
-        "Where to practise: {spot}, good for {spot_themes}",
+        f"{T['brief']} · {{weekday}} {{date}}",
+        "",
+        "📝 <b>{headline}</b>",
+        "☀️ Sunrise <code>{sunrise}</code> · golden hour <code>{golden_evening_start}</code> to <code>{sunset}</code>"
+        " · blue hour until <code>{blue_end}</code>",
+        "🌤 Morning {weather_morning} · afternoon {weather_afternoon} · evening {weather_evening}",
+        "<i>{forecast_note}</i>",
+        "📚 Week {week_number} · {theme}",
+        "🎯 Assignment: {assignment}",
+        "🎞 Recipe of the day: <b>{recipe_name}</b> · {film_simulation}. {why_today}",
+        "🎞 Recipe of the day: <b>{recipe_name}</b> · {film_simulation}.{no_why_today}",
+        "📍 Where: <b>{spot}</b> · good for {spot_themes}",
+        "#today",
     ],
     "composition": [
-        "#composition #week{week_number}",
-        "<b>{title}</b>",
+        f"{T['composition']} · week {{week_number}}",
+        "",
+        "🖼 <b>{title}</b>",
         "{what_it_is}",
-        "How to spot it: {how_to_see}",
-        "With your X100VI: {camera_how}",
-        "Exercise: {exercise}",
-        "Common mistake: {mistake}",
+        "👀 How to spot it: {how_to_see}",
+        "📷 With your X100VI: {camera_how}",
+        "🎯 Exercise: {exercise}",
+        "⚠️ Common mistake: {mistake}",
         '<a href="{learn_more_url:link}">{learn_more_label}</a>',
+        "#composition #week{week_number}",
     ],
     "photographer": [
-        "#photographer  {name_tag}",
-        "<b>{name}</b>, {identity}",
-        "What to learn: {what_to_study}",
-        "Composition moves: {moves}",
-        "Try it with your X100VI: {try_it}",
-        "Recipe to pair: {recipe_name}",
-        '<a href="{official_url:link}">See their work</a>',
+        f"{T['photographer']} · {{kind}}",
+        "",
+        "👤 <b>{name}</b> · {identity}",
+        "📖 What to learn: {what_to_study}",
+        "🧭 Composition moves: {moves}",
+        "🎯 Try it with your X100VI: {try_it}",
+        "🎞 Recipe to pair: <b>{recipe_name}</b>",
+        '<a href="{official_url:link}">See their work</a>  ·  #photographer',
     ],
     "camera_tip": [
-        "#x100vi  {topic}",
-        "<b>{title}</b>",
-        "Why: {why}",
-        "How: {menu_path}",
+        f"{T['camera_tip']} · {{topic}}",
+        "",
+        "📷 <b>{title}</b>",
+        "💡 Why: {why}",
+        "🔧 How: <code>{menu_path}</code>",
         "{how_detail}",
-        "When to use it: {when}",
-        '<a href="{manual_url:link}">Official manual page</a>',
+        "⏰ When to use it: {when}",
+        '<a href="{manual_url:link}">Official manual page</a>  ·  #x100vi',
     ],
     "video_lesson": [
-        "#lesson  {channel}",
-        "<b>{video_title}</b>",
-        "What to watch for: {watch_for}",
-        "Then try: {then_try}",
-        '<a href="{video_url:link}">Watch on YouTube</a>',
+        f"{T['video_lesson']} · {{channel}}",
+        "",
+        "▶️ <b>{video_title}</b>",
+        "👀 What to watch for: {watch_for}",
+        "🎯 Then try: {then_try}",
+        '<a href="{video_url:link}">Watch on YouTube</a>  ·  #lesson',
     ],
     "drill": [
-        "#drill #week{week_number}",
-        "<b>{title}</b>",
+        f"{T['drill']} · week {{week_number}}, ten minutes",
+        "",
+        "⏱ <b>{title}</b>",
         "{steps}",
-        "Settings to start with: {settings_hint}",
+        "⚙️ Settings to start with: {settings_hint}",
+        "#drill #week{week_number}",
     ],
     "golden_hour": [
+        f"{T['golden_hour']} · from <code>{{golden_evening_start}}</code>, sunset <code>{{sunset}}</code>",
+        "",
+        "🗺 Plan: {plan}",
+        "👀 Look for: {look_for}",
+        "📷 Set up: {setup}",
+        "🎞 Recipe: <b>{recipe_name}</b>",
+        "📍 Where: <b>{spot}</b>",
         "#goldenhour",
-        "<b>Golden hour from {golden_evening_start}, sunset {sunset}</b>",
-        "Plan: {plan}",
-        "Look for: {look_for}",
-        "Set up: {setup}",
-        "Recipe: {recipe_name}",
-        "Where: {spot}",
     ],
     "learning_tip": [
-        "#learn  {topic}",
-        "<b>{title}</b>",
+        f"{T['learning_tip']} · {{topic}}",
+        "",
+        "📚 <b>{title}</b>",
         "{body}",
-        "Try this week: {action}",
+        "🎯 Try this week: {action}",
+        "#learn",
     ],
     "review": [
+        f"{T['review']} · pick your best three frames from today",
+        "",
+        "🔍 <b>{headline}</b>",
+        "1️⃣ {q1}",
+        "2️⃣ {q2}",
+        "3️⃣ {q3}",
+        "✂️ {culling_tip}",
+        "<i>Reply /done to log today's assignment.</i>",
         "#review",
-        "<b>{headline}</b>",
-        "Pick your best three frames from today and ask:",
-        "1. {q1}",
-        "2. {q2}",
-        "3. {q3}",
-        "{culling_tip}",
-        "Reply /done to log today's assignment.",
     ],
     "weekly_recap": [
-        "#recap #week{week_number}",
-        "<b>Week {week_number}: {theme}</b>",
-        "Assignments done: {done_count} of 7",
+        f"{T['weekly_recap']} · week {{week_number}}",
+        "",
+        "📆 <b>Week {week_number}: {theme}</b>",
+        "✅ Assignments done: <code>{done_count}</code> of 7",
         "{recap}",
-        "Next week: {next_theme}. {next_week_hint}",
-        "Next week: {next_theme}.{no_next_week_hint}",
+        "➡️ Next week: <b>{next_theme}</b>. {next_week_hint}",
+        "➡️ Next week: <b>{next_theme}</b>.{no_next_week_hint}",
         "{bank_plan}",
+        "#recap #week{week_number}",
     ],
 }
 
@@ -135,22 +160,26 @@ def _empty(v) -> bool:
     return v is None or v == "" or v == [] or (isinstance(v, str) and v.strip().lower() in ("none", "null"))
 
 
-def _text(v) -> str:
+def _text(v, key: str = "") -> str:
     if isinstance(v, list):
-        return "\n".join(esc(x) for x in v if not _empty(x))
+        items = [esc(x) for x in v if not _empty(x)]
+        if key == "steps":
+            return "\n".join(f"{i}. {x}" for i, x in enumerate(items, 1))
+        return " · ".join(items)
     return esc(v)
 
 
 def render(item_type: str, values: dict) -> str:
     """Fill the type's template. Lines whose values are missing are dropped; blank separators collapse."""
     values = dict(values)
-    # the brief and recap lines have a variant for when Claude's sentence is missing
-    for text_key, alt in (("why_today", "no_why_today"), ("next_week_hint", "no_next_week_hint")):
-        values[alt] = None if not _empty(values.get(text_key)) else " "
     out: list[str] = []
     for line in TEMPLATES[item_type]:
         names = [(f, spec) for _, f, spec, _ in Formatter().parse(line) if f]
-        if any(_empty(values.get(f)) for f, _ in names):
+        # {no_x} is the variant marker: present (and rendered as nothing) exactly when {x} is empty
+        for f, _ in names:
+            if f.startswith("no_"):
+                values[f] = "" if _empty(values.get(f[3:])) else None
+        if any(_empty(values.get(f)) and not (f.startswith("no_") and values.get(f) == "") for f, _ in names):
             continue
         filled = line
         for f, spec in names:
@@ -161,7 +190,7 @@ def render(item_type: str, values: dict) -> str:
                     break
                 filled = filled.replace(f"{{{f}:link}}", esc_attr(v))
             else:
-                filled = filled.replace(f"{{{f}}}", _text(v))
+                filled = filled.replace(f"{{{f}}}", _text(v, f))
         if filled is not None:
             out.append(filled.rstrip())
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(out)).strip()
