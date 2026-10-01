@@ -74,11 +74,11 @@ def test_weekly_limit_gives_up_and_alerts(claude):
     assert r is None and len(claude.calls) == 1 and "09:00" in alerts[0]
 
 
-def test_timeout_then_fallback(claude, clock):
+def test_timeout_then_fallback(claude, clock, monkeypatch):
     def boom(argv, **kw):
         claude.calls.append(argv)
         raise subprocess.TimeoutExpired(argv, 10)
-    subprocess.run = boom
+    monkeypatch.setattr(subprocess, "run", boom)
     alerts = []
     r = claude.run_with_retry("claude", "b", {}, alert=alerts.append, schema=ROOT / "prompts/compose_schema.json",
                               timeout=10)
@@ -159,7 +159,7 @@ def test_missing_slot_fails(settings):
 
 def test_menu_names_and_short_forms_are_allowed(settings):
     out = clean_output()
-    out["slots"][2]["fields"]["body"] = "Set FRAMING GUIDELINE to GRID 9, use the OVF, keep ISO on AUTO and IBIS on."
+    out["slots"][2]["fields"]["body"] = "Set FRAMING GUIDELINE to GRID 9, use the OVF at F5.6 or F4, keep ISO on AUTO and IBIS on."
     ok, bad = run(settings, out)
     assert not bad, bad
 

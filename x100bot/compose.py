@@ -34,6 +34,7 @@ OTHER_CAMERAS = re.compile(r"\b(X100[VFTS]\b|X100VI(?!\b)|X-?T\d+\b|X-?Pro\d\b|X
 URL_RE = re.compile(r"https?://|www\.|\.com\b|\.org\b", re.I)
 DASH_RE = re.compile(r"[‒–—―]| - |--|^-|\s-\s")
 SETTING_RE = re.compile(r"\bDR\s?-?\d|\b\d{3,5}\s?K\b|[+\-−]\s?\d")
+APERTURE_RE = re.compile(r"^F/?\d+(\.\d+)?$")
 CAPS_RE = re.compile(r"\b[A-Z][A-Z0-9./+()\-]{1,}\b")
 
 
@@ -86,6 +87,8 @@ def check_slot(slot: dict, out: dict, caps: set[str], schema_props: dict) -> lis
             errs.append(f"{k} names another camera")
         for m in CAPS_RE.finditer(text):
             w = m.group(0).strip("().,")
+            if APERTURE_RE.match(w):   # general photography terms such as F5.6 are allowed by the brief
+                continue
             if len(w) >= 2 and w not in caps and not w.isdigit():
                 errs.append(f"{k} has an unknown capitalised word {w}")
     if typ == "photographer":
