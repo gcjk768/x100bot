@@ -359,10 +359,12 @@ def run_plan(s, date: str | None = None, dry_run: bool = False, offline: bool = 
         d = plan_day(x, day, offline=offline)
         composed = {}
         if not offline:
+            from .compose import compose_day
             try:
-                from .compose import compose_day
                 composed = compose_day(x, d)
-            except ImportError:
+            except Exception as ex:   # noqa: BLE001 - the day must never be empty because compose failed
+                log.exception("compose failed, fallback templates for every slot")
+                x.alert("compose_fallback", f"compose crashed ({type(ex).__name__}: {str(ex)[:120]}); fallback templates used")
                 composed = {}
         out = []
         for sl in d.slots:

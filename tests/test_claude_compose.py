@@ -169,3 +169,17 @@ def test_over_length_fails(settings):
     out["slots"][2]["fields"]["title"] = "x" * 91
     ok, bad = run(settings, out)
     assert "21" in bad and "over 90" in bad["21"][0]
+
+
+def test_compose_budget_exhausted_falls_back_to_templates(settings, conn, make_limiter):
+    from types import SimpleNamespace
+    from datetime import date
+    from x100bot import planner, compose as compose_mod
+    lim = make_limiter()
+    for _ in range(3):
+        lim.report(lim.acquire("claude"), "ok")
+    alerts = []
+    x = SimpleNamespace(s=settings, conn=conn, lim=lim, alert=lambda k, t: alerts.append((k, t)))
+    d = planner.plan_day(x, date(2026, 10, 6), offline=True)
+    assert compose_mod.compose_day(x, d) == {}
+    assert alerts and alerts[-1][0] == "compose_fallback" and "budget" in alerts[-1][1]

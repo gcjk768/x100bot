@@ -11,6 +11,7 @@ from pathlib import Path
 import yaml
 
 from .claude import Claude, fill
+from .ratelimit import LimitError
 
 log = logging.getLogger(__name__)
 
@@ -150,7 +151,11 @@ def compose_day(x, d) -> dict:
     kw = dict(schema=schema_path, timeout=s.claude.compose.timeout_seconds,
               system_file=root / "prompts" / "compose_system.md", disallowed_tools=",".join(s.claude.no_tools),
               max_turns=s.claude.compose.max_turns)
-    res = claude.run_with_retry("claude", brief, stdin, alert=lambda t: x.alert("compose_fallback", t), **kw)
+    try:
+        res = claude.run_with_retry("claude", brief, stdin, alert=lambda t: x.alert("compose_fallback", t), **kw)
+    except LimitError as ex:   # the daily Claude budget is spent: the whole day uses the fallback templates
+        x.alert("compose_fallback", f"compose skipped, {ex}; fallback templates used")
+        return {}
     if res is None:
         return {}
     ok, bad = validate(slots, res.data, caps, schema)
