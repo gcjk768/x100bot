@@ -325,6 +325,8 @@ class Teacher:
             data = {"chat_id": str(chat), "caption": caption, "parse_mode": "HTML"}
             if reply_to:
                 data["reply_to_message_id"] = str(reply_to)
+            if x.tg.in_topic(chat):
+                data["message_thread_id"] = str(x.tg.thread_id)
             r = x.tg.http.post("sendPhoto", data=data, files={"photo": ("overlay.jpg", f, "image/jpeg")})
         x.lim.report(t, "ok" if r.status_code < 400 else "soft_fail", status=r.status_code)
         body = r.json()

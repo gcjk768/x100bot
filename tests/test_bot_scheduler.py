@@ -120,3 +120,23 @@ def test_exif_mapping_on_fixture():
     fields = exif.map_tags(raw)
     assert fields["model"] == "X100VI" and fields["film_simulation"] and fields["shutter_text"] == "1/250"
     assert not any("gps" in k.lower() for k in fields)
+
+
+def test_owner_in_the_bot_topic_is_answered_and_the_reply_goes_to_the_topic(ctx):
+    ctx.s.telegram.chat_id = "<TELEGRAM_CHAT_ID>"
+    ctx.s.telegram.message_thread_id = <THREAD_ID>
+    ctx.tg.group_chat_id = "<TELEGRAM_CHAT_ID>"
+    bot = Bot(ctx)
+    bot.handle(msg(ctx, "/help", user=42, chat_type="supergroup"))
+    # the message above has no thread id, so it is another topic: ignored
+    assert not ctx.server.calls
+    m = msg(ctx, "/help", user=42, chat_type="supergroup")
+    m["message"]["chat"]["id"] = <TELEGRAM_CHAT_ID>
+    m["message"]["message_thread_id"] = 396
+    bot.handle(m)
+    assert ctx.server.calls and ctx.server.calls[0][1]["message_thread_id"] == 396
+    other = msg(ctx, "/help", user=42, chat_type="supergroup")
+    other["message"]["chat"]["id"] = <TELEGRAM_CHAT_ID>
+    other["message"]["message_thread_id"] = 2765
+    bot.handle(other)
+    assert len(ctx.server.calls) == 1   # another topic in the same group: ignored
