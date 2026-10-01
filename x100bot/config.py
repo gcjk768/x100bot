@@ -20,6 +20,7 @@ class ConfigError(Exception):
 
 class TelegramCfg(BaseModel):
     chat_id: str
+    message_thread_id: int | None = None   # forum topic id inside chat_id; None for a plain channel
     owner_user_id: int = 0
     admin_chat_id: str = ""
     notify_types: list[str] = ["brief", "golden_hour"]
@@ -219,6 +220,12 @@ def load(path: str | Path | None = None, env: str | Path | None = None) -> Setti
     path = Path(path) if path else ROOT / "config.yaml"
     load_env(Path(env) if env else path.parent / ".env")
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    # private ids live in .env so the public config.yaml carries none of them
+    for env_key, key, cast in (("TELEGRAM_CHAT_ID", "chat_id", str), ("TELEGRAM_THREAD_ID", "message_thread_id", int),
+                               ("TELEGRAM_ADMIN_CHAT_ID", "admin_chat_id", str),
+                               ("TELEGRAM_OWNER_USER_ID", "owner_user_id", int)):
+        if os.environ.get(env_key):
+            raw["telegram"][key] = cast(os.environ[env_key])
     # in the container config.yaml is mounted at /app, next to camera/, library/ and prompts/
     s = Settings(**raw, root=path.parent.resolve(), bot_token=os.environ.get("TELEGRAM_BOT_TOKEN", ""))
     check(s)

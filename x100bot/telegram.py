@@ -51,8 +51,9 @@ def preview_options(preview_url: str | None, above: bool) -> dict:
 
 
 class Telegram:
-    def __init__(self, token: str, limiter: Limiter, limits, transport: httpx.BaseTransport | None = None):
-        self.lim, self.limits = limiter, limits
+    def __init__(self, token: str, limiter: Limiter, limits, transport: httpx.BaseTransport | None = None,
+                 thread_id: int | None = None):
+        self.lim, self.limits, self.thread_id = limiter, limits, thread_id
         # long polls hold the connection for poll_timeout_seconds, so the read timeout must be longer
         self.http = httpx.Client(base_url=f"https://api.telegram.org/bot{token}/", transport=transport,
                                  timeout=httpx.Timeout(limits.poll_timeout_seconds + 15))
@@ -88,11 +89,13 @@ class Telegram:
             return data["result"]
 
     def send(self, chat_id, text: str, *, silent: bool = False, preview_url: str | None = None,
-             above: bool = True, parse_mode: str | None = "HTML") -> int:
-        """One message. Returns its message_id."""
+             above: bool = True, parse_mode: str | None = "HTML", topic: bool = False) -> int:
+        """One message. Returns its message_id. topic=True posts into the configured forum topic."""
         assert len(text) <= MAX_LEN, f"message is {len(text)} characters"
         params = dict(chat_id=chat_id, text=text, disable_notification=silent,
                       link_preview_options=preview_options(preview_url, above))
+        if topic and self.thread_id:
+            params["message_thread_id"] = self.thread_id
         if parse_mode:
             params["parse_mode"] = parse_mode
         return self.call("sendMessage", **params)["message_id"]

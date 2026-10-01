@@ -20,7 +20,8 @@ class Ctx:
         self.s, self.job, self.offline = s, job, offline
         self.conn = db.connect(s.data_dir / "x100bot.db")
         self.lim = Limiter(self.conn, rules_from_settings(s, seed=seed), job, s.schedule.timezone)
-        self.tg = Telegram(s.bot_token, self.lim, s.limits.telegram) if s.bot_token and not offline else None
+        self.tg = Telegram(s.bot_token, self.lim, s.limits.telegram, thread_id=s.telegram.message_thread_id) \
+            if s.bot_token and not offline else None
         self.alert = Alerts(self.conn, self.tg, s.telegram.admin_chat_id, self.lim.today)
         self.web = Web(s, self.conn, self.lim, alert=self.alert, offline=offline)
 
@@ -44,8 +45,9 @@ def cmd_test_telegram(s) -> None:
     x = Ctx(s, "test-telegram")
     if not x.tg:
         sys.exit("TELEGRAM_BOT_TOKEN is not set")
-    mid = x.tg.send(s.telegram.chat_id, "x100bot test, this message deletes itself", silent=True)
-    print(f"posted message {mid} to the channel")
+    mid = x.tg.send(s.telegram.chat_id, "x100bot test, this message deletes itself", silent=True, topic=True)
+    print(f"posted message {mid} to the channel" + (f" (topic {s.telegram.message_thread_id})"
+                                                      if s.telegram.message_thread_id else ""))
     x.tg.call("deleteMessage", chat_id=s.telegram.chat_id, message_id=mid)
     print("deleted it again, so the bot can post and delete")
     if s.telegram.admin_chat_id:
