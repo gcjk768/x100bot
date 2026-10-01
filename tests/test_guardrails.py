@@ -44,7 +44,7 @@ def test_clean_critique_passes():
 
 @pytest.mark.parametrize("key,value", [
     ("mode", "Av"), ("aperture", "f/1.4"), ("aperture", "f/22"), ("shutter", "1/5000"), ("shutter", "1/333"),
-    ("iso", "AUTO4"), ("iso", "AUTO2, max 200"), ("iso", "AUTO1, min shutter 1/4000"), ("iso", "150"),
+    ("iso", "AUTO4"), ("iso", "AUTO2, max 200"), ("iso", "AUTO1, min shutter 1/4000"), ("iso", "150"), ("iso", "ISO AUTO"),
     ("exposure_comp", "+6"), ("exposure_comp", "+0.5"), ("focus_mode", "Z"), ("af_area", "SPOT"), ("nd_filter", "AUTO"),
     ("teleconverter", "85"), ("film_simulation", "KODACHROME"), ("dynamic_range", "800%"), ("recipe_name", "Not A Recipe")])
 def test_each_invalid_setting_fails(key, value):
@@ -56,8 +56,9 @@ def test_each_invalid_setting_fails(key, value):
 @pytest.mark.parametrize("key,value", [
     ("aperture", "f/2"), ("aperture", "F16"), ("shutter", "1/4000"), ("shutter", "2 s"), ("shutter", "30"),
     ("iso", "6400"), ("iso", "AUTO3"), ("iso", "AUTO1, max 3200, min shutter 1/125"), ("exposure_comp", "+1 1/3"),
+    ("iso", "ISO AUTO SETTING with minimum shutter 1/60 s, max ISO 6400"), ("exposure_comp", "-0.33"), ("exposure_comp", "0.7"),
     ("exposure_comp", "0"), ("exposure_comp", "-5"), ("focus_mode", "C"), ("af_area", "WIDE/TRACKING"), ("nd_filter", "ON"),
-    ("teleconverter", "70mm"), ("film_simulation", "ACROS+R FILTER"), ("dynamic_range", "AUTO"), ("recipe_name", "")])
+    ("teleconverter", "70mm"), ("film_simulation", "ACROS+R FILTER"), ("dynamic_range", "AUTO"), ("dynamic_range", "DR200"), ("recipe_name", "")])
 def test_each_valid_setting_passes(key, value):
     r = good()
     r["settings"][key] = value
@@ -123,3 +124,21 @@ def test_made_up_used_settings_rejected_without_exif():
     r["settings_why"] = "You used f/2 which blurred the wall, so stop down."
     assert run(r, exif=True)[1] == []
     assert any("EXIF" in e for e in run(r, exif=False)[1])
+    r["settings_why"] = "Your shutter speed was 1/60, too slow for a walking subject."
+    assert any("EXIF" in e for e in run(r, exif=False)[1])
+
+
+def test_honest_sentences_about_missing_exif_pass():
+    r = good()
+    r["settings_why"] = "I cannot see what you used because no EXIF came with the photo, so start from f/5.6 and AUTO2."
+    r["cannot_tell"] = "The settings you used are unknown without EXIF."
+    assert run(r, exif=False)[1] == []
+
+
+def test_decimal_thirds_are_normalised():
+    r = good()
+    r["settings"]["exposure_comp"] = "-0.33"
+    r["settings"]["iso"] = "ISO AUTO SETTING with minimum shutter 1/60 s, max ISO 6400"
+    out, errs = run(r)
+    assert errs == [] and out["settings"]["exposure_comp"] == "-1/3"
+    assert out["settings"]["iso"] == "AUTO, max 6400, min shutter 1/60"

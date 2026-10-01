@@ -32,6 +32,16 @@ def plan_running(data_dir: Path) -> bool:
     return (Path(data_dir) / "locks" / "plan.lock").exists()
 
 
+STALE_RUNNING_S = 20 * 60
+
+
+def recover_stale(x) -> int:
+    """A job left 'running' by a crashed or restarted process goes back to pending after STALE_RUNNING_S."""
+    cur = x.conn.execute("UPDATE teacher_queue SET status='pending' WHERE status='running' AND attempts<3 AND "
+                         "created_at<?", (x.lim.clock() - STALE_RUNNING_S,))
+    return cur.rowcount
+
+
 def claim(x) -> dict | None:
     """The oldest due job, moved to running inside a transaction so two drains never take the same job."""
     with tx(x.conn):
@@ -64,6 +74,7 @@ def drain(x, handler, max_jobs: int = 5) -> int:
     """Run due jobs one by one. handler(job) returns 'done', 'failed' or a not_before timestamp to requeue.
     Pauses while the plan job holds its lock (the 05:30 plan has priority)."""
     done = 0
+    recover_stale(x)
     for _ in range(max_jobs):
         if plan_running(x.s.data_dir):
             log.info("teacher queue paused: plan job running")

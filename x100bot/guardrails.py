@@ -12,10 +12,20 @@ import yaml
 
 from .compose import APERTURE_RE, CAPS_RE, DASH_RE, OTHER_CAMERAS, URL_RE, allowed_caps
 
-SHORT_FORMS = {"ISO", "OVF", "EVF", "ND", "IBIS", "AF", "MF", "EV", "JPEG", "HEIF", "RAW", "SGT", "HDB", "MRT"}
+SHORT_FORMS = {"ISO", "OVF", "EVF", "ND", "IBIS", "AF", "MF", "EV", "JPEG", "HEIF", "RAW", "SGT", "HDB", "MRT", "EXIF", "LCD"}
 MARKDOWN_RE = re.compile(r"\*\*|__|^#+\s|`|\[[^\]]+\]\([^)]+\)", re.M)
 EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF☀-➿\U0001F1E6-\U0001F1FF]")
-USED_CLAIM_RE = re.compile(r"\byou (used|shot|chose|set|were (at|on)|had)\b|\byour (settings?|aperture|shutter|iso)\b", re.I)
+# a positive claim about the settings used: the phrase, then a value within the sentence, and no negation just before
+USED_CLAIM_RE = re.compile(r"\b(you (used|shot (at|with)|chose|set|were (at|on)|had)|your (aperture|shutter( speed)?|iso|"
+                           r"exposure( compensation)?|settings?)( was| were| of| at|:)?)\b[^.]{0,40}?(\d|f/|AUTO)", re.I)
+NEGATED_RE = re.compile(r"\b(not|no|cannot|can't|unknown|without|unclear|missing|unable)\b[^.]{0,30}$", re.I)
+
+
+def claims_used(text: str) -> bool:
+    for m in USED_CLAIM_RE.finditer(text or ""):
+        if not NEGATED_RE.search(text[max(0, m.start() - 40):m.start()]):
+            return True
+    return False
 AREAS = ("composition", "light", "exposure", "focus", "colour", "moment")
 MECH_SPEEDS = ["4000", "3200", "2500", "2000", "1600", "1250", "1000", "800", "640", "500", "400", "320", "250", "200",
                "160", "125", "100", "80", "60", "50", "40", "30", "25", "20", "15", "13", "10", "8", "6", "5", "4", "3"]
@@ -50,6 +60,17 @@ def _frac(text: str) -> Fraction | None:
         return None
     val = sum(Fraction(p) for p in m.group(2).split())
     return -val if m.group(1) == "-" else val
+
+
+def ec_text(fr: Fraction) -> str:
+    """-4/3 -> '-1 1/3', 2/3 -> '+2/3', 0 -> '0'."""
+    if fr == 0:
+        return "0"
+    sign = "-" if fr < 0 else "+"
+    fr = abs(fr)
+    whole, rem = divmod(fr.numerator, fr.denominator)
+    parts = ([str(whole)] if whole else []) + ([f"{rem}/{fr.denominator}"] if rem else [])
+    return sign + " ".join(parts)
 
 
 def check_setting(key: str, value: str, settings: dict, f: dict) -> str | None:
@@ -87,23 +108,36 @@ def check_setting(key: str, value: str, settings: dict, f: dict) -> str | None:
         m = re.fullmatch(r"(?:ISO\s*)?(\d+)", up)
         if m:
             return None if int(m.group(1)) in ISO_VALUES else f"ISO {v} is not a value the camera offers"
-        m = re.fullmatch(r"(AUTO[123])(?:[,;]?\s*(?:MAX(?:\.|IMUM)?\s*(?:SENSITIVITY)?\s*(?:ISO)?\s*(\d+)))?"
-                         r"(?:[,;]?\s*MIN(?:\.|IMUM)?\s*SHUTTER(?:\s*SPEED)?\s*(1/\d+|\d+\s*S(?:EC)?|AUTO))?", up)
-        if not m:
+        if "AUTO" not in up:
             return f"ISO {v} is not a number or AUTO1 to AUTO3"
-        if m.group(2) and not 400 <= int(m.group(2)) <= 12800:
-            return f"ISO AUTO max sensitivity {m.group(2)} is outside 400 to 12800"
-        if m.group(3) and m.group(3) != "AUTO":
-            sp = m.group(3).replace(" ", "")
-            ok = (sp.startswith("1/") and sp[2:] in MECH_SPEEDS and int(sp[2:]) <= 2000) or \
-                 re.fullmatch(r"\d+S(EC)?", sp) and sp.rstrip("SEC") in SECONDS
+        bank = re.search(r"AUTO\s?([123])", up)
+        mx = re.search(r"MAX(?:\.|IMUM)?(?:\s*SENSITIVITY)?(?:\s*ISO)?\s*(\d+)|(?:UP TO|TO)\s*(?:ISO\s*)?(\d+)", up)
+        mn = re.search(r"MIN(?:\.|IMUM)?\s*SHUTTER(?:\s*SPEED)?\s*(?:OF\s*)?(1/\d+|\d+\s*S(?:EC)?|AUTO)", up)
+        if not bank and not (mx or mn):
+            return f"ISO {v} needs AUTO1, AUTO2 or AUTO3, or a max sensitivity and minimum shutter speed"
+        max_v = int(next(g for g in mx.groups() if g)) if mx else None
+        if max_v is not None and not 400 <= max_v <= 12800:
+            return f"ISO AUTO max sensitivity {max_v} is outside 400 to 12800"
+        min_s = mn.group(1).replace(" ", "") if mn else None
+        if min_s and min_s != "AUTO":
+            ok = (min_s.startswith("1/") and min_s[2:] in MECH_SPEEDS and int(min_s[2:]) <= 2000) or                  (re.fullmatch(r"\d+S(EC)?", min_s) and re.sub(r"S(EC)?$", "", min_s) in SECONDS)
             if not ok:
-                return f"ISO AUTO min shutter {m.group(3)} is outside 1/2000 to 30 seconds"
+                return f"ISO AUTO min shutter {min_s} is outside 1/2000 to 30 seconds"
+        parts = [f"AUTO{bank.group(1)}" if bank else "AUTO"]
+        if max_v:
+            parts.append(f"max {max_v}")
+        if min_s:
+            parts.append(f"min shutter {min_s.lower() if min_s != 'AUTO' else 'AUTO'}")
+        settings[key] = ", ".join(parts)
         return None
     if key == "exposure_comp":
         fr = _frac(v)
-        if fr is None or abs(fr) > 5 or (fr * 3).denominator != 1:
+        if fr is None or abs(fr) > 5:
             return f"exposure_comp {v} is not within -5 to +5 in thirds"
+        thirds = round(float(fr) * 3)
+        if abs(float(fr) * 3 - thirds) > 0.16:   # 0.3, 0.33, 0.67 and 0.7 are thirds written as decimals
+            return f"exposure_comp {v} is not a third of a stop"
+        settings[key] = ec_text(Fraction(thirds, 3))
         return None
     if key == "focus_mode":
         return None if up in ("S", "C", "M", "AF-S", "AF-C", "MF") else f"focus_mode {v} is not S, C or M"
@@ -118,7 +152,11 @@ def check_setting(key: str, value: str, settings: dict, f: dict) -> str | None:
         sims = f["film_simulations"]["color"] + f["film_simulations"]["monochrome"]
         return None if v in sims else f"film_simulation {v} is not one of the 20"
     if key == "dynamic_range":
-        return None if up in ("AUTO", "100%", "200%", "400%") else f"dynamic_range {v} is not AUTO, 100%, 200% or 400%"
+        m = re.fullmatch(r"(?:DR\s*-?\s*)?(AUTO|100|200|400)\s*%?", up)   # DR200, DR 400, 200% all mean the same
+        if not m:
+            return f"dynamic_range {v} is not AUTO, 100%, 200% or 400%"
+        settings[key] = m.group(1) if m.group(1) == "AUTO" else m.group(1) + "%"
+        return None
     if key == "recipe_name":
         return None   # checked against the library by the caller
     return f"unknown setting {key}"
@@ -211,7 +249,7 @@ def check_critique(result: dict, *, facts_file: str, menus_file: str, schema_fil
         errs.append(f"learn_from {lf['photographer_name']} is not a library photographer")
     for key, text in texts(r):
         errs += check_text(key, text, caps)
-    if not exif_available and USED_CLAIM_RE.search(r.get("settings_why", "") or ""):
+    if not exif_available and claims_used(r.get("settings_why", "") or ""):
         errs.append("settings_why claims what was used, but no EXIF was available")
     return r, errs
 

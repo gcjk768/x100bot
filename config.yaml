@@ -119,6 +119,9 @@ teacher:
   weekly_report_cron: "0 20 * * 0"
   monthly_best_cron: "0 20 1 * *"
   score_weights: {composition: 0.25, light: 0.25, moment: 0.15, exposure: 0.15, focus: 0.10, colour: 0.10}
-  measurement_thresholds: {highlights_clipped_pct: 1.0, shadows_crushed_pct: 2.0, cast_ab: 6.0, tilt_min_degrees: 0.7, tilt_min_lines: 4, blur_laplacian_min: 0}   # blur threshold calibrated at the first STOP HERE
+  # calibrated 2026-10-02 on James's first three photos: sharp subjects measured 1600 to 2500, out of focus sky cells 21 to 32,
+  # so 100 flags a frame whose sharpest area is still soft. tilt lines on real street scenes spread 6 to 7 degrees, so the
+  # confidence rule (spread under 2.5 for medium) keeps busy frames from being called tilted.
+  measurement_thresholds: {highlights_clipped_pct: 1.0, shadows_crushed_pct: 2.0, cast_ab: 6.0, tilt_min_degrees: 0.7, tilt_min_lines: 4, blur_laplacian_min: 100}
 repair:
   enabled: false
