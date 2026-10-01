@@ -18,4 +18,4 @@ Open items: `sources.firmware_page` URL (find during step 4), YouTube channel id
 
 Then the teacher add on, steps 1 to 6 of [[Teacher Spec]], with its own two STOP HERE points.
 
-Teacher: steps 1 to 3 done 2026-10-02 (STOP HERE, calibration with the owner's photos pending). Next: step 4 compare and series, step 5 ask/plan, assignment check, progress, weekly report, /forget; step 6 Docker (packages already in the Dockerfile) and README section.
+Teacher: steps 1 to 6 done 2026-10-02 and deployed. Open: a real camera JPEG for the Fujifilm EXIF tag mapping (exif.py TAGS are exiftool's documented names, unconfirmed), 7 more photographers, research call on untagged recipes, first live weekly report on Sunday 2026-10-04 20:00.

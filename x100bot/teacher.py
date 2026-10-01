@@ -65,7 +65,10 @@ def set_setting(x, key: str, value: str) -> None:
     x.conn.execute("INSERT OR REPLACE INTO teacher_settings(key, value) VALUES(?,?)", (key, value))
 
 
-class Teacher:
+from .teacher_more import TeacherMore
+
+
+class Teacher(TeacherMore):
     def __init__(self, x):
         self.x, self.s = x, x.s
         self.cfg = x.s.teacher

@@ -60,6 +60,20 @@ A cooldown means a site answered 429 or 403, or failed three times in a row; the
 
 **Send files, not photos, for the settings readout.** Telegram strips EXIF from photos but keeps it in files. Send the original JPEG or HEIF as a file and the bot replies with the Fujifilm settings you shot and the closest library recipe. Files over 20 MB cannot be downloaded by bots; send a smaller JPEG. RAF files cannot be read.
 
+## The photo teacher
+
+Send a photo to the bot (private chat or the bot's topic) and it critiques it: an overlay with the thirds grid, the suggested crop and a level line, with scores for composition, light, exposure, focus, colour and the moment; then the guidance, with one top fix explained properly (what, why, the principle, concrete steps), composition and light notes, when and where to reshoot, a settings table (what you used from the EXIF against what to try, with the menu path for every change, from `camera/settings_menu_map.yaml`), a reshoot plan, an exercise, a recipe and a photographer from the library, and the measured values the advice rests on.
+
+* **Send files for settings advice.** Telegram strips EXIF from photos but keeps it in files. Send the camera's original JPEG or HEIF as a file (not a gallery re-save, which drops the Fujifilm maker notes). Caption = your intent. Flags: `#quick` short critique, `#settings` readout only (no Claude call), `#assignment` grade against today's assignment and mark it done when it meets it.
+* **Ask more**: reply to any teacher message with a question, or tap Simpler, More depth, Why these scores, Reshoot plan. Show crop sends the crop preview.
+* **Reshoot and compare**: reply to a critique with the new photo.
+* **Series**: send an album of 2 to 8 photos.
+* **Any text** is a question. `/plan what, where, when` gives a shot plan with that day's light times and forecast.
+* `/level`, `/style` (encouraging, direct, socratic), `/quick on|off`, `/progress`, `/best`, `/history`, `/forget` (reply, or `/forget 12`), `/forgetall` (asks for confirmation).
+* Sundays 20:00: a weekly progress report with a chart of your averages per area over 8 weeks and the best photo of the week. The 1st of the month: the five best of the month as an album.
+
+Every claim about exposure, tilt, sharpness or colour comes from the app's own measurements (`x100bot/measure.py`), every setting the teacher recommends is validated against the X100VI (`x100bot/guardrails.py`), and GPS and all other metadata are stripped before Claude sees a copy. Photos stay in `data/teacher/` on the NAS; `/forget` deletes a critique's files, rows and Claude session; folders older than `teacher.retention_days` are removed. The teacher has its own daily caps (`limits.teacher`), one Claude call at a time, and a persistent queue: when Claude's usage limit is hit, photos wait until the reset time instead of failing. Thresholds in `teacher.measurement_thresholds` were calibrated on the first real photos (see the comment in `config.yaml`).
+
 ## Why the limits exist
 
 Every request to a website, Open-Meteo, Telegram and Claude goes through `x100bot/ratelimit.py`, with state in SQLite so a restart never resets a budget. Websites get one request at a time, 6 to 12 seconds apart per domain, robots.txt is obeyed, feeds and index pages are fetched at most once a day with conditional GET, recipe and manual pages are cached forever, link checks for 14 days, and the whole app makes at most 150 web requests a day. Telegram calls are 1.2 seconds apart and at most 20 a minute; a 429 is waited out, and an item whose wait would exceed 15 minutes fails for that hour rather than posting late in a burst. Claude is called at most three times a day for the channel. `x100bot/config.py` refuses to start if any limit is set looser than its floor. A slow day is fine. Hammering a small blog or the Telegram API is not.

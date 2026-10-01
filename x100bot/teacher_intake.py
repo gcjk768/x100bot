@@ -118,11 +118,16 @@ class TeacherIntake:
 
     def callback(self, cq: dict) -> None:
         data = cq.get("data") or ""
+        chat = cq["message"]["chat"]["id"]
+        if data == "t:fa:0":
+            from .progress import forget_all
+            return self.reply(chat, f"Deleted everything the teacher stored ({forget_all(self.x)} critiques).")
+        if data == "t:fx:0":
+            return self.reply(chat, "Nothing deleted.")
         m = re.fullmatch(r"t:([sdwrc]):(\d+)", data)
         if not m:
             return
         code, cid = m.group(1), int(m.group(2))
-        chat = cq["message"]["chat"]["id"]
         if code == "c":
             return self.enqueue(chat, "crop", {"chat_id": chat, "critique_id": cid, "reply_to": cq["message"]["message_id"]}, quiet=True)
         self.enqueue(chat, "followup", {"chat_id": chat, "critique_id": cid, "question": BUTTON_QUESTIONS[code],
