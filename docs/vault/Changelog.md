@@ -5,6 +5,7 @@ updated: 2026-10-02
 # Changelog
 
 ## 2026-10-02
+- Step 6 and 7: bot.py private commands (/today /recipe /tip /slots /setc /favorites /done /status /help, settings readout from files, owner only), scheduler tests (misfire skip, race), Dockerfile (exiftool, Claude Code native, teacher packages), docker-compose.yml (claude_home volume), full README. 138 tests.
 - Step 4 seed: 57 recipes (both indexes, 50 pages), 57 manual tips (library/seed/tips.yaml, verified against cached pages), 11 photographers (library/seed/people.yaml, 7 more need about pages), 20 YouTube videos verified by oEmbed (11 channels with ids in config.yaml). Daily web budget of 150 reached and the limiter stopped the rest, as designed.
 - Step 5 started: claude.py wrapper (json-schema is passed as text, Windows resolves claude.exe), compose.py with guardrails + `x100bot eval` (8 golden cases), research.py, exif.py (mapping to confirm with a real file). First real compose call: 16 slots, $0.18, one guardrail retry (F4/F5.6 flagged, now allowed as general photography terms). STOP HERE shown.
 - Also written ahead: scheduler.py (post job claims rows in a transaction, misfire skip), status.py, vault.py (Activity log when VAULT_DIR is set, per the NAS vault convention).
