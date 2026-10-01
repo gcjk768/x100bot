@@ -12,7 +12,7 @@ Build order from the brief. STOP HERE after 3 and after the first real compose c
 4. `x100bot seed`. Done: 57 recipes, 57 tips, 11 of 20+ photographers (rest need about pages, tomorrow's budget), 20 videos, channel ids resolved.
 5. compose done with one real call (STOP HERE shown 2026-10-02). Research runs when stock is low or recipes are untagged (tomorrow). Basic critique dropped: the teacher replaces it. exif mapping waits for a real X100VI JPEG.
 6. Done: scheduler, status, eval, bot.py private commands.
-7. Done: Dockerfile, compose, README. Not yet built or deployed on the NAS.
+7. Done: Dockerfile, compose, README. Deployed 2026-10-02 as NAS stack /volume1/docker/x100bot (image x100bot:2a6ae78); first channel day is 2026-10-02 from 07:00 with fallback text (Claude budget was spent by the build), full compose from 2026-10-03.
 
 Open items: `sources.firmware_page` URL (find during step 4), YouTube channel ids, `telegram.chat_id` and `owner_user_id` from James.
 
