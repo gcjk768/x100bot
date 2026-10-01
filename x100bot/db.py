@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import sqlite3
+import threading
 from contextlib import contextmanager
 from pathlib import Path
 
@@ -66,25 +67,74 @@ CREATE TABLE IF NOT EXISTS profile_snapshots(date TEXT PRIMARY KEY, profile_json
 """
 
 
-def connect(path: str | Path) -> sqlite3.Connection:
+class _Rows:
+    """The fully fetched result of one statement, so no cursor outlives the lock."""
+
+    def __init__(self, cur):
+        self.rows = cur.fetchall() if cur.description else []
+        self.lastrowid, self.rowcount = cur.lastrowid, cur.rowcount
+        cur.close()
+
+    def fetchone(self):
+        return self.rows[0] if self.rows else None
+
+    def fetchall(self):
+        return self.rows
+
+    def __iter__(self):
+        return iter(self.rows)
+
+
+class SafeConn:
+    """A sqlite3 connection shared by the listener, the teacher drain and the keep alive threads. One lock around
+    every statement, results fetched eagerly, so concurrent use never corrupts a cursor."""
+
+    def __init__(self, conn: sqlite3.Connection):
+        self._c = conn
+        self.lock = threading.RLock()
+
+    def execute(self, sql: str, params=()) -> _Rows:
+        with self.lock:
+            return _Rows(self._c.execute(sql, params))
+
+    def executemany(self, sql: str, seq) -> _Rows:
+        with self.lock:
+            return _Rows(self._c.executemany(sql, seq))
+
+    def executescript(self, sql: str) -> None:
+        with self.lock:
+            self._c.executescript(sql)
+
+    def commit(self) -> None:
+        with self.lock:
+            self._c.commit()
+
+    def close(self) -> None:
+        with self.lock:
+            self._c.close()
+
+
+def connect(path: str | Path) -> SafeConn:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(path, isolation_level=None, timeout=30, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.executescript(SCHEMA)
-    return conn
+    return SafeConn(conn)
 
 
 @contextmanager
-def tx(conn: sqlite3.Connection):
-    """BEGIN IMMEDIATE takes the write lock up front, so two processes can never claim the same row."""
-    conn.execute("BEGIN IMMEDIATE")
-    try:
-        yield conn
-    except BaseException:
-        conn.execute("ROLLBACK")
-        raise
-    conn.execute("COMMIT")
+def tx(conn: SafeConn):
+    """BEGIN IMMEDIATE takes the write lock up front, so two processes can never claim the same row; the
+    connection lock is held for the whole transaction so no other thread's statement lands inside it."""
+    with conn.lock:
+        conn.execute("BEGIN IMMEDIATE")
+        try:
+            yield conn
+        except BaseException:
+            conn.execute("ROLLBACK")
+            raise
+        conn.execute("COMMIT")
 
 
 def kv_get(conn, key: str, default: str | None = None) -> str | None:
