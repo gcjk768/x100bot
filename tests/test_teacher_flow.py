@@ -99,7 +99,7 @@ def test_buttons_route_to_preset_followups(ctx):
     ctx.conn.execute("INSERT INTO critiques(id, created_at, kind, source, status) VALUES(3, 0, 'single', 'photo', 'done')")
     bot = Bot(ctx)
     bot.handle({"update_id": 2, "callback_query": {"id": "cq1", "from": {"id": 42}, "data": "t:s:3",
-                                                   "message": {"message_id": 77, "chat": {"id": 42}}}})
+                                                   "message": {"message_id": 77, "chat": {"id": 42, "type": "private"}}}})
     assert ctx.server.calls[0][0] == "answerCallbackQuery"
     (kind, p), = jobs(ctx)
     assert kind == "followup" and p["question"].startswith("Explain the top fix again")

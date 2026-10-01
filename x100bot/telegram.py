@@ -52,13 +52,21 @@ def preview_options(preview_url: str | None, above: bool) -> dict:
 
 class Telegram:
     def __init__(self, token: str, limiter: Limiter, limits, transport: httpx.BaseTransport | None = None,
-                 thread_id: int | None = None):
+                 thread_id: int | None = None, group_chat_id: str | int | None = None):
         self.lim, self.limits, self.thread_id = limiter, limits, thread_id
+        self.group_chat_id = str(group_chat_id) if group_chat_id not in (None, "") else None
         # long polls hold the connection for poll_timeout_seconds, so the read timeout must be longer
         self.http = httpx.Client(base_url=f"https://api.telegram.org/bot{token}/", transport=transport,
                                  timeout=httpx.Timeout(limits.poll_timeout_seconds + 15))
 
+    def in_topic(self, chat_id) -> bool:
+        """True when chat_id is the configured group, so messages there belong in the configured topic."""
+        return bool(self.thread_id and self.group_chat_id and str(chat_id) == self.group_chat_id)
+
     def call(self, method: str, **params):
+        # anything sent into the group chat lands in the configured topic, whichever module sends it
+        if method.startswith("send") and "message_thread_id" not in params and self.in_topic(params.get("chat_id")):
+            params["message_thread_id"] = self.thread_id
         fails = throttles = 0
         while True:
             t = self.lim.acquire("telegram", target=method)

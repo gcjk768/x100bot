@@ -46,14 +46,14 @@ class Bot:
     def handle(self, update: dict) -> None:
         if "callback_query" in update:
             cq = update["callback_query"]
-            if cq.get("from", {}).get("id") != self.owner:
+            if not self.allowed({**cq.get("message", {}), "from": cq.get("from", {})}):
                 return
             self.x.tg.call("answerCallbackQuery", callback_query_id=cq["id"])
             if self.teacher:
                 self.teacher.callback(cq)
             return
         m = update.get("message")
-        if not m or m.get("chat", {}).get("type") != "private" or m.get("from", {}).get("id") != self.owner:
+        if not m or not self.allowed(m):
             return
         self.chat = m["chat"]["id"]
         text = (m.get("text") or "").strip()
@@ -78,6 +78,18 @@ class Bot:
         if self.teacher and text:
             return self.teacher.question(text, m)
         self.reply("Send a photo or a file, or /help for the commands.")
+
+    def allowed(self, m: dict) -> bool:
+        """The owner in the private chat, or the owner inside the bot's own topic of the group. Nobody else."""
+        if m.get("from", {}).get("id") != self.owner:
+            return False
+        chat = m.get("chat", {})
+        if chat.get("type") == "private":
+            return True
+        if str(chat.get("id")) == str(self.s.telegram.chat_id):
+            thread = self.s.telegram.message_thread_id
+            return thread is None or m.get("message_thread_id") == thread
+        return False
 
     def reply(self, html: str, **kw) -> int:
         return self.x.tg.send(self.chat, html, parse_mode="HTML", **kw)
