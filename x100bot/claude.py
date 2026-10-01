@@ -73,6 +73,17 @@ class Claude:
         self.s, self.lim, self.tz = s, limiter, tz
         self.cfg = s.claude
 
+    def binary(self) -> str:
+        """The claude executable. On Windows the npm shim is a .cmd that wraps bin/claude.exe; run the exe directly
+        so the prompt text never goes through cmd.exe quoting. In the container it is the native install."""
+        import shutil
+        found = shutil.which(self.cfg.binary) or self.cfg.binary
+        if found.lower().endswith(".cmd"):
+            exe = Path(found).parent / "node_modules" / "@anthropic-ai" / "claude-code" / "bin" / "claude.exe"
+            if exe.exists():
+                return str(exe)
+        return found
+
     def env(self) -> dict:
         env = dict(os.environ)
         env["CLAUDE_CODE_MAX_RETRIES"] = str(self.cfg.max_retries)
@@ -84,7 +95,9 @@ class Claude:
     def argv(self, prompt: str, *, schema: Path, model: str, system_file: Path | None = None,
              allowed_tools: str | None = None, disallowed_tools: str | None = None, max_turns: int = 4,
              resume: str | None = None, persist_session: bool = False, extra: list[str] | None = None) -> list[str]:
-        a = [self.cfg.binary, "-p", prompt, "--output-format", "json", "--json-schema", str(schema),
+        # --json-schema takes the schema text itself, not a file path
+        a = [self.binary(), "-p", prompt, "--output-format", "json", "--json-schema",
+             Path(schema).read_text(encoding="utf-8"),
              "--permission-mode", "dontAsk", "--permission-prompts", "none", "--strict-mcp-config",
              "--model", model, "--fallback-model", self.cfg.fallback_model, "--max-turns", str(max_turns)]
         if not persist_session:

@@ -5,6 +5,10 @@ updated: 2026-10-02
 # Changelog
 
 ## 2026-10-02
+- Step 4 seed: 57 recipes (both indexes, 50 pages), 57 manual tips (library/seed/tips.yaml, verified against cached pages), 11 photographers (library/seed/people.yaml, 7 more need about pages), 20 YouTube videos verified by oEmbed (11 channels with ids in config.yaml). Daily web budget of 150 reached and the limiter stopped the rest, as designed.
+- Step 5 started: claude.py wrapper (json-schema is passed as text, Windows resolves claude.exe), compose.py with guardrails + `x100bot eval` (8 golden cases), research.py, exif.py (mapping to confirm with a real file). First real compose call: 16 slots, $0.18, one guardrail retry (F4/F5.6 flagged, now allowed as general photography terms). STOP HERE shown.
+- Also written ahead: scheduler.py (post job claims rows in a transaction, misfire skip), status.py, vault.py (Activity log when VAULT_DIR is set, per the NAS vault convention).
+- Teacher add on spec received; saved verbatim in [[Teacher Spec]] and prompts/teacher_* etc. Build starts after x100bot step 6.
 - Posts restyled to the shared Telegram card style (emoji header, <code> settings, divider, <blockquote expandable> hint, short link labels); the owner chose this over the brief's plain templates. Preview image stays above the text. SECTION_TITLES constant in `x100bot/render.py`. First real card posted to topic 396.
 - Bot @owner_x100vi_bot ("X100VI Coach") created via BotFather; admin in the owner Channel, posts to topic 396 (chat <TELEGRAM_CHAT_ID>); private ids moved to .env (TELEGRAM_CHAT_ID, THREAD_ID, OWNER_USER_ID, ADMIN_CHAT_ID); forum topic support added to telegram.py; test-telegram passed (msg 3500 posted and deleted, admin alert received).
 - Steps 1 to 3 built: config with safety floors, db, ratelimit, lock, web, telegram, alerts, cli; camera facts and 230 menu items from the official manual; Fuji X Weekly parser (new and old layouts, multi recipe pages, per sensor values) and recipe validator; light, weather, planner, renderer, fallback copy; `plan --dry-run --offline` prints a full day. 111 tests pass.
