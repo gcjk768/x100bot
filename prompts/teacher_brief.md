@@ -1,0 +1,2 @@
+Critique the photo ./photo.jpg for my student. Detail level: {{detail}}. Level: {{level}}. Style: {{style}}. Week theme: {{theme}}.{{assignment_line}}
+Stdin holds the caption, EXIF, measurements, learning profile, allowed names, camera facts, menu names and allowed tags. In quick detail, fill only summary, scores, top_fix, settings, settings_why and exercise, and leave the other text fields empty. Return the critique object.

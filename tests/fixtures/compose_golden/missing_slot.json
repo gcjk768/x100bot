@@ -1,0 +1,53 @@
+{
+ "rule": "missing_slot",
+ "expect": "fail",
+ "slots": [
+  {
+   "slot_id": "08",
+   "type": "recipe",
+   "facts": {
+    "recipe_name": "Easy Reala Ace"
+   }
+  },
+  {
+   "slot_id": "12",
+   "type": "photographer",
+   "facts": {
+    "name": "Saul Leiter"
+   }
+  },
+  {
+   "slot_id": "21",
+   "type": "learning_tip",
+   "facts": {
+    "topic": "culling"
+   }
+  }
+ ],
+ "output": {
+  "run_note": "",
+  "slots": [
+   {
+    "slot_id": "08",
+    "type": "recipe",
+    "fields": {
+     "best_for": "soft morning light on faces",
+     "why": "Reala Ace keeps colours faithful with a touch of contrast. The look stays calm in mixed light.",
+     "try_today": "Shoot the void deck at nine while the light is still soft."
+    }
+   },
+   {
+    "slot_id": "12",
+    "type": "photographer",
+    "fields": {
+     "what_to_study": "Saul Leiter framed through windows and rain. He let colour carry the mood.",
+     "moves": [
+      "shoot through glass",
+      "let a colour lead"
+     ],
+     "try_it": "Stand under a shelter and shoot through the rain on the glass with the EVF."
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,119 @@
+# Photographers to learn from. Written during the build (2026-10-02) only from the official pages the bot opened
+# (data/build/people/*.txt). Each note is paraphrased from that page; the loader checks every URL and that the
+# official page names the person. kind: master or educator. themes use curriculum.yaml keys. No dashes in text.
+people:
+  - name: Henri Cartier-Bresson
+    kind: master
+    identity: French photographer, co founder of Magnum, the photographer of the decisive moment
+    official_url: https://www.henricartierbresson.org/en/hcb/
+    extra_urls: []
+    themes: [street, placement, lines]
+    facts:
+      - {note: "He described the camera as a sketchbook and an instrument of intuition, deciding what the frame means at the same instant he sees it.", url: "https://www.henricartierbresson.org/en/hcb/"}
+      - {note: "Composition for him needed concentration, discipline and a sense of geometry, with simplicity reached through economy of means.", url: "https://www.henricartierbresson.org/en/hcb/"}
+      - {note: "A photograph, in his words, recognises within a fraction of a second both the fact and the rigorous organisation of forms that gives it meaning.", url: "https://www.henricartierbresson.org/en/hcb/"}
+      - {note: "He spoke of putting head, eye and heart on the same axis when photographing.", url: "https://www.henricartierbresson.org/en/hcb/"}
+  - name: Saul Leiter
+    kind: master
+    identity: American photographer and painter, a pioneer of colour street photography in New York
+    official_url: https://www.saulleiterfoundation.org/
+    extra_urls: []
+    themes: [colour, framing, layering]
+    facts:
+      - {note: "He began experimenting with colour photography in New York in the late 1940s, using slide film such as Kodachrome, long before colour was accepted in fine art photography.", url: "https://www.saulleiterfoundation.org/"}
+      - {note: "His black and white work shows an equally bold compositional style, often flipping the focus from foreground to background.", url: "https://www.saulleiterfoundation.org/"}
+      - {note: "He played with the dynamics of shadow and reflection, finding intrigue and emotion in everyday settings.", url: "https://www.saulleiterfoundation.org/"}
+      - {note: "He saw beauty in the overlooked ordinary as the photographer's gift to the viewer.", url: "https://www.saulleiterfoundation.org/"}
+  - name: Garry Winogrand
+    kind: master
+    identity: American street photographer of New York public life
+    official_url: https://fraenkelgallery.com/artists/garry-winogrand
+    extra_urls: []
+    themes: [street, people, placement]
+    facts:
+      - {note: "He photographed city streets relentlessly, recording crowds and individuals and the tension and exuberance of public life.", url: "https://fraenkelgallery.com/artists/garry-winogrand"}
+      - {note: "His frames are typically crammed with activity and offer several viewpoints rather than a single subject.", url: "https://fraenkelgallery.com/artists/garry-winogrand"}
+      - {note: "Beneath their seemingly chaotic surface his pictures hold an almost subliminal order, which is what to study in them.", url: "https://fraenkelgallery.com/artists/garry-winogrand"}
+      - {note: "His series The Animals framed the zoo as a theatre where humans and animals interact, a lesson in juxtaposition.", url: "https://fraenkelgallery.com/artists/garry-winogrand"}
+  - name: William Eggleston
+    kind: master
+    identity: American photographer from Memphis who made colour photography an art form
+    official_url: https://www.egglestonartfoundation.org/
+    extra_urls: []
+    themes: [colour, subject]
+    facts:
+      - {note: "His way of looking at the world and his singular pictorial style still reverberate across contemporary visual culture.", url: "https://www.egglestonartfoundation.org/"}
+      - {note: "He described photography as a democratic way of looking around, treating ordinary subjects as worthy of a frame.", url: "https://www.egglestonartfoundation.org/"}
+      - {note: "His immense body of work began in the late 1950s and is archived by the foundation in his hometown of Memphis.", url: "https://www.egglestonartfoundation.org/"}
+  - name: Fan Ho
+    kind: master
+    identity: Hong Kong photographer and film director, master of light and shadow in 1950s and 60s Hong Kong
+    official_url: https://fanhophotography.com/
+    extra_urls: []
+    themes: [light, bw, lines]
+    facts:
+      - {note: "His black and white street photographs of Hong Kong in the 1950s and 60s are built on light and shadow, which the estate names as his signature.", url: "https://fanhophotography.com/"}
+      - {note: "His bodies of work include Hong Kong Yesterday, The Living Theatre, A Hong Kong Memoir and Portrait of Hong Kong, all studies of one city.", url: "https://fanhophotography.com/"}
+      - {note: "The estate published his Thoughts on Street Photography in 2025 and a major retrospective opened in Turin in 2026.", url: "https://fanhophotography.com/"}
+  - name: Ernst Haas
+    kind: master
+    identity: Austrian American photographer, an early master of colour and motion
+    official_url: https://ernst-haas.com/
+    extra_urls: []
+    themes: [colour, negative_space, light]
+    facts:
+      - {note: "The estate groups his work into Classic Color and New Color, with series on creation, abstraction, motion, flora and cities such as New York and Paris.", url: "https://ernst-haas.com/"}
+      - {note: "Motion is one of his named series, showing how he used blur and movement as a compositional element.", url: "https://ernst-haas.com/"}
+      - {note: "Alongside colour he made black and white portraits and abstractions across America, Europe and Asia.", url: "https://ernst-haas.com/"}
+  - name: Vivian Maier
+    kind: master
+    identity: American street photographer whose work was discovered after her death
+    official_url: https://www.vivianmaier.com/
+    extra_urls: []
+    themes: [street, bw, people]
+    facts:
+      - {note: "The official site presents her street work in five portfolios, the heart of her output.", url: "https://www.vivianmaier.com/"}
+      - {note: "She also made a body of colour work and a long series of self portraits, often using reflections and shadows.", url: "https://www.vivianmaier.com/"}
+      - {note: "Her contact sheets are published, which lets you study how she worked a scene frame by frame.", url: "https://www.vivianmaier.com/"}
+  - name: Sean Tucker
+    kind: educator
+    identity: photographer, filmmaker and writer who teaches street and portrait photography
+    official_url: https://www.seantucker.photography/
+    extra_urls: []
+    themes: [light, street, bw]
+    facts:
+      - {note: "For him street photography is about seeing rather than solving, drawn to fleeting expressions, shifting light and abandoned objects.", url: "https://www.seantucker.photography/"}
+      - {note: "He looks for the quiet choreography between people and architecture in city life.", url: "https://www.seantucker.photography/"}
+      - {note: "His portraits are inspired by Rembrandt and the Old Masters, with real light sculpting the features.", url: "https://www.seantucker.photography/"}
+      - {note: "He published The Art of Street Photography and runs street photography workshops.", url: "https://www.seantucker.photography/"}
+  - name: Kevin Mullins
+    kind: educator
+    identity: documentary photographer and educator, Fujifilm user, known for candid wedding and family work
+    official_url: https://www.kevinmullinsphotography.co.uk/
+    extra_urls: []
+    themes: [people, street, light]
+    facts:
+      - {note: "Documentary photography is at the heart of his work, with attention to light, people and moments.", url: "https://www.kevinmullinsphotography.co.uk/"}
+      - {note: "His family sessions are honest and unposed, no prompts, just an afternoon observed.", url: "https://www.kevinmullinsphotography.co.uk/"}
+      - {note: "His street workshop encourages you to slow down, observe patiently and make thoughtful, story driven images.", url: "https://www.kevinmullinsphotography.co.uk/"}
+      - {note: "He teaches how light, composition and human behaviour tell honest, story led narratives.", url: "https://www.kevinmullinsphotography.co.uk/"}
+  - name: Alex Kilbee
+    kind: educator
+    identity: photographer behind The Photographic Eye, teaching the fundamentals of seeing
+    official_url: https://www.thephotographiceye.info/
+    extra_urls: []
+    themes: [placement, lines, framing]
+    facts:
+      - {note: "His teaching focuses on the fundamentals of seeing, not gear or presets.", url: "https://www.thephotographiceye.info/"}
+      - {note: "He runs a community where photographers get weekly feedback and critique on their own photographs.", url: "https://www.thephotographiceye.info/"}
+      - {note: "His learning library covers composition, lighting and editing, after thirty years behind a camera.", url: "https://www.thephotographiceye.info/"}
+  - name: Mark Denney
+    kind: educator
+    identity: landscape photographer and educator
+    official_url: https://www.markdenneyphotography.com/
+    extra_urls: []
+    themes: [light, layering]
+    facts:
+      - {note: "His course The Art of Shaping Light is about making landscape photos feel more dimensional.", url: "https://www.markdenneyphotography.com/"}
+      - {note: "He teaches creating depth and dimension and guiding the viewer's eye while keeping results natural.", url: "https://www.markdenneyphotography.com/"}
+      - {note: "He uses the light already in a frame to add depth, direction and atmosphere rather than adding effects.", url: "https://www.markdenneyphotography.com/"}
