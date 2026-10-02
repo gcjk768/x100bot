@@ -12,14 +12,14 @@ services:
     env_file: .env
     environment:
       TZ: Asia/Singapore
-      # optional: an Obsidian vault the bot writes its movement log into (see README)
-      # VAULT_DIR: /vault
+      # Obsidian vault: movement log + memory (see README). Host folder from VAULT_HOST_PATH in .env
+      VAULT_DIR: /vault
     volumes:
       - ./data:/app/data
       - ./config.yaml:/app/config.yaml:ro
       # Claude Code sessions, so the teacher's follow ups survive a restart
       - ./data/claude_home:/home/app/.claude
-      # - /volume1/James/Obsidian/x100bot:/vault
+      - "${VAULT_HOST_PATH:-./data/vault}:/vault"
     command: x100bot serve
     # Claude Code documents 4 GB of RAM as its floor, so no memory limit is set below that
     logging:

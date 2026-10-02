@@ -10,6 +10,7 @@ from pathlib import Path
 
 import yaml
 
+from . import vault
 from .claude import Claude, fill
 from .ratelimit import LimitError
 
@@ -146,7 +147,7 @@ def compose_day(x, d) -> dict:
              "slots": slots}
     brief = fill((root / "prompts" / "compose_brief.md").read_text(encoding="utf-8"), date=d.date.isoformat(),
                  week_number=d.week["week"], theme=d.week["theme"], cycle=d.cycle, level=s.learning.level,
-                 slot_count=len(slots))
+                 slot_count=len(slots)) + vault.memory_block()   # what was already posted, so nothing repeats
     claude = Claude(s, x.lim, x.lim.tz)
     kw = dict(schema=schema_path, timeout=s.claude.compose.timeout_seconds,
               system_file=root / "prompts" / "compose_system.md", disallowed_tools=",".join(s.claude.no_tools),

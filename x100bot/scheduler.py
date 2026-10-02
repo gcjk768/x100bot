@@ -25,11 +25,13 @@ JOB = dict(max_instances=1, coalesce=True)
 
 def triggers(s) -> dict[str, CronTrigger]:
     tz = s.schedule.timezone
-    hours = ",".join(sorted({h for h in s.schedule.slots} | set(s.schedule.sunday_overrides)))
+    keys = sorted(set(s.schedule.slots) | set(s.schedule.sunday_overrides))
+    hours = ",".join(sorted({k[:2] for k in keys}))
+    minutes = ",".join(sorted({k[3:5] if ":" in k else f"{s.schedule.post_minute:02d}" for k in keys}))
     t = {"sources": CronTrigger.from_crontab(s.schedule.sources_cron, timezone=tz),
          "plan": CronTrigger.from_crontab(s.schedule.plan_cron, timezone=tz),
          "firmware": CronTrigger.from_crontab(s.schedule.firmware_cron, timezone=tz),
-         "post": CronTrigger(hour=hours, minute=s.schedule.post_minute, timezone=tz)}
+         "post": CronTrigger(hour=hours, minute=minutes, timezone=tz)}
     if s.telegram.replace_previous_day:
         t["delete_yesterday"] = CronTrigger(hour=6, minute=55, timezone=tz)
     return t
@@ -61,7 +63,7 @@ def post_slot(s, hour: str, date_str: str | None = None, force: bool = False) ->
     x = Ctx(s, "post")
     now = datetime.now(x.lim.tz)
     day = date_str or now.date().isoformat()
-    slot_at = f"{day} {hour}:00"
+    slot_at = f"{day} {hour}" if ":" in hour else f"{day} {hour}:00"
     with job_lock(s.data_dir, "post"):
         with tx(x.conn):
             row = x.conn.execute("SELECT * FROM queue WHERE slot_at=? AND status='pending'", (slot_at,)).fetchone()
@@ -87,15 +89,18 @@ def post_slot(s, hour: str, date_str: str | None = None, force: bool = False) ->
         x.conn.execute("UPDATE queue SET status='posted', message_id=?, posted_at=? WHERE id=?",
                        (mid, x.lim.clock(), row["id"]))
         mark_posted_material(x, row)
-        vault.log_event("📨", "posted", f"{slot_at} {row['type']} message {mid}")
+        vault.posted(row, mid)
         return f"{slot_at}: posted message {mid} ({row['type']})"
 
 
 def post_job(s) -> None:
-    hour = datetime.now().astimezone().strftime("%H")
     try:
         from zoneinfo import ZoneInfo
-        hour = datetime.now(ZoneInfo(s.schedule.timezone)).strftime("%H")
+        now = datetime.now(ZoneInfo(s.schedule.timezone))
+        hour = now.strftime("%H:%M")
+        # slots keyed by plain hour fire at post_minute; HH:MM slots fire at their own minute
+        if hour not in s.schedule.slots and hour not in s.schedule.sunday_overrides:
+            hour = now.strftime("%H")
         log.info(post_slot(s, hour))
     except LockBusy as ex:
         log.warning("post skipped: %s", ex)
@@ -191,6 +196,8 @@ def serve(s) -> None:
     stop = threading.Event()
     threading.Thread(target=listen, args=(s, stop), name="bot", daemon=True).start()
     log.info("serving: %s", {k: str(v) for k, v in t.items()})
+    vault.migrate()
+    vault.log_event("🚀", "bot started", f"{len(s.schedule.slots)} slots a day")
     try:
         sched.start()
     finally:

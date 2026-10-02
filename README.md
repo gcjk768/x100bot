@@ -107,4 +107,4 @@ x100bot plan --date 2026-10-05 --dry-run               # same with weather and o
 x100bot eval                                           # the compose guardrails on the golden fixtures
 ```
 
-If `VAULT_DIR` is set (an Obsidian vault mounted into the container), the bot appends one line per event to `Activity/YYYY-MM-DD.md` there: posts, plans, sources runs, alerts, commands. Best effort only; the vault never breaks a run.
+If `VAULT_DIR` is set (an Obsidian vault mounted into the container, NAS: `/volume1/James/Obsidian/x100bot`), the bot keeps its movement log and memory there: one line per event in `Activity/YYYY/MM/YYYY-MM-DD.md` (posts, plans, sources runs, alerts, commands), one note per posted item in `Recipes/` and `Lessons/` with an append-only History, and `Home.md`. The daily compose call gets the newest Activity lines (capped at 4,000 characters) as memory so recipes and lessons are not repeated. Best effort only; the vault never breaks a run.
