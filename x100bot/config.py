@@ -1,6 +1,7 @@
 """Load config.yaml and .env into pydantic settings, and refuse settings looser than the safety floors."""
 from __future__ import annotations
 
+import re
 import os
 from pathlib import Path
 from typing import Literal
@@ -239,8 +240,8 @@ def check(s: Settings) -> None:
     if s.limits.web.per_domain_max_gap_seconds < s.limits.web.per_domain_min_gap_seconds:
         raise ConfigError("Refusing to start: limits.web.per_domain_max_gap_seconds is below per_domain_min_gap_seconds.")
     for hh, t in {**s.schedule.slots, **s.schedule.sunday_overrides}.items():
-        if t not in ITEM_TYPES or not (len(hh) == 2 and hh.isdigit() and 0 <= int(hh) <= 23):
-            raise ConfigError(f"schedule.slots: '{hh}: {t}' is not an hour and a known item type")
+        if t not in ITEM_TYPES or not re.fullmatch(r"([01]\d|2[0-3])(:[0-5]\d)?", hh):
+            raise ConfigError(f"schedule.slots: '{hh}: {t}' is not an HH or HH:MM time and a known item type")
     if s.telegram.admin_chat_id and s.telegram.admin_chat_id == s.telegram.chat_id:
         raise ConfigError("telegram.admin_chat_id must not be the channel. Alerts never go to the channel.")
 

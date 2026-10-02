@@ -213,7 +213,7 @@ def plan_day(x, day: Date, offline: bool = False, weather_data: dict | None = No
     recipes_by_hour = {}
     for hh, t in types.items():
         if t == "recipe":
-            label = hour_label(d, int(hh))
+            label = hour_label(d, int(hh[:2]))
             r = pk.recipe(label)
             recipes_by_hour[hh] = (r, label)
     main = weather.main_condition(hours)
@@ -287,7 +287,7 @@ def plan_day(x, day: Date, offline: bool = False, weather_data: dict | None = No
                              "recipe_name": r18["name"] if r18 else None, "spot": gh_spot["name"] if gh_spot else None})
         elif t in ("composition", "drill"):
             sl.facts.update({"lesson_index": comp_n if t == "composition" else 0,
-                             "evening": int(hh) >= 18, "recent_lessons": pk.recent_lessons(),
+                             "evening": int(hh[:2]) >= 18, "recent_lessons": pk.recent_lessons(),
                              "weather": d.periods})
             comp_n += t == "composition"
         elif t == "learning_tip":
@@ -301,7 +301,7 @@ def plan_day(x, day: Date, offline: bool = False, weather_data: dict | None = No
         if sl.type in SUBSTITUTE and sl.ref_type is None:
             sl.type = SUBSTITUTE[sl.type]
             sl.facts["topic"] = pk.learning_topic(prefer="choosing a recipe for the light" if t == "recipe" else None)
-        sl.facts["hour_label"] = hour_label(d, int(hh))
+        sl.facts["hour_label"] = hour_label(d, int(hh[:2]))
         d.slots.append(sl)
     if stock_low:
         x.alert("stock_low", f"library stock is low for {', '.join(sorted(set(stock_low)))}; those slots were "
@@ -373,7 +373,7 @@ def run_plan(s, date: str | None = None, dry_run: bool = False, offline: bool = 
             if used_fallback:
                 fields = fallback_fields(s, sl)
             text, preview = render_slot(sl, fields)
-            row = {"slot_at": f"{day.isoformat()} {sl.hour}:00", "type": sl.type, "planned_type": sl.planned_type,
+            row = {"slot_at": f"{day.isoformat()} {sl.hour}" if ":" in sl.hour else f"{day.isoformat()} {sl.hour}:00", "type": sl.type, "planned_type": sl.planned_type,
                    "ref_type": sl.ref_type, "ref_id": sl.ref_id, "facts": sl.facts, "fields": fields, "text": text,
                    "preview_url": preview, "notify": sl.type in s.telegram.notify_types, "used_fallback": used_fallback}
             out.append(row)

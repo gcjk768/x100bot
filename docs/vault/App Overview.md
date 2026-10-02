@@ -19,6 +19,9 @@ Every website, Open-Meteo, Telegram and Claude call goes through `x100bot/rateli
 - Menus for the compose guardrail: `camera/menus.yaml`, built by `tools/build_menus.py` from cached manual pages.
 - Curriculum `library/curriculum.yaml`, spots `library/spots.yaml`, fallback copy `library/fallbacks.yaml`.
 
+## Vault (movement log + memory)
+- `x100bot/vault.py`, root `VAULT_DIR` (`/vault`; NAS host `/volume1/<USER>/Obsidian/x100bot`, local `VAULT_HOST_PATH`). `Activity/YYYY/MM/YYYY-MM-DD.md` (`log_event`, SGT; `migrate()` moves old flat notes), `Recipes/<name>.md` + `Lessons/<title>.md` (`posted`, called from `x100bot/scheduler.py` `post_slot`), `Home.md` (`write_home`). Memory: `memory_block()` → appended to the compose brief in `x100bot/compose.py` `compose_day`. Best effort, off when `VAULT_DIR` is unset. Events: bot started, day planned, posted <type>, post failed, deleted yesterday's posts, sources refreshed, firmware found, commands, critiques, weekly report.
+
 ## Data
 SQLite at `data/x100bot.db` (WAL), page cache in `data/pages/`, locks in `data/locks/`. Schema in `x100bot/db.py`.
 
