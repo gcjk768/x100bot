@@ -8,13 +8,13 @@ telegram:
   replace_previous_day: false                # true deletes yesterday's posts at 06:55. Bots can only delete posts younger than 48 hours
 schedule:
   timezone: Asia/Singapore
-  sources_cron: "0 5 * * *"
+  sources_cron: "0 8 * * *"
   plan_cron: "30 5 * * *"
-  firmware_cron: "15 5 * * 1"
+  firmware_cron: "15 8 * * 1"
   post_minute: 0
   misfire_grace_minutes: 30
-  slots: {"07": brief, "08": recipe, "09": camera_tip, "10": composition, "11": recipe, "12": photographer, "13": camera_tip, "14": video_lesson, "15": recipe, "16": drill, "17": golden_hour, "18": recipe, "19": composition, "20": recipe, "21": learning_tip, "22": review}
-  sunday_overrides: {"21": weekly_recap}
+  slots: {"08:00": brief, "08:30": recipe, "09:00": recipe, "09:30": recipe, "10:00": composition, "10:30": camera_tip, "11:00": recipe, "11:30": recipe, "12:00": recipe, "12:30": recipe, "13:00": recipe, "13:30": recipe, "14:00": recipe, "14:30": camera_tip, "15:00": recipe, "15:30": recipe, "16:00": drill, "16:30": recipe, "17:00": golden_hour, "17:30": recipe, "18:00": recipe, "18:30": camera_tip, "19:00": recipe, "19:30": recipe, "20:00": recipe, "20:30": recipe, "21:00": learning_tip, "21:30": recipe, "22:00": review}
+  sunday_overrides: {"21:00": weekly_recap}
 location:
   name: Singapore
   latitude: 1.3521
@@ -28,9 +28,9 @@ learning:
   level: intermediate
   curriculum_file: library/curriculum.yaml
   spots_file: library/spots.yaml
-  learning_topics: [culling, reading light, storytelling and series, straight out of camera workflow, street etiquette, gear care in humidity, backing up to the NAS, choosing a recipe for the light]
+  learning_topics: [choosing a recipe for the light, film simulation basics, Classic Chrome vs Classic Neg, grain and colour chrome settings, white balance shifts for recipes, tone curve for film looks, reading light, straight out of camera workflow]
 library:
-  recipe_repeat_days: 45
+  recipe_repeat_days: 14
   photographer_repeat_days: 45
   camera_tip_repeat_days: 30
   lesson_repeat_days: 60
@@ -67,7 +67,7 @@ claude:
   auth: oauth                                # oauth = CLAUDE_CODE_OAUTH_TOKEN, apikey = ANTHROPIC_API_KEY plus --bare
   max_retries: 4                             # passed as CLAUDE_CODE_MAX_RETRIES
   research: {max_turns: 40, timeout_seconds: 900}
-  compose:  {max_turns: 4, timeout_seconds: 600}
+  compose:  {max_turns: 4, timeout_seconds: 1200}
   critique: {max_turns: 4, timeout_seconds: 300, max_long_edge_px: 2048}
   no_tools: [Bash, Edit, Write, Read, Glob, Grep, WebFetch, WebSearch, Agent, NotebookEdit]
 limits:
@@ -75,7 +75,7 @@ limits:
     per_domain_min_gap_seconds: 6            # random wait between 6 and 12 seconds per domain
     per_domain_max_gap_seconds: 12
     max_requests_per_day: 150                # all websites together, link checks included
-    max_new_recipe_pages_per_day: 10
+    max_new_recipe_pages_per_day: 30
     max_seed_pages: 150                      # only for the one time `x100bot seed`
     retries: 2
     backoff_seconds: [30, 120]
@@ -96,8 +96,8 @@ limits:
     max_critiques_per_day: 10
   teacher:
     max_critiques_per_day: 15
-    max_followups_per_day: 40
-    max_questions_per_day: 20
+    max_followups_per_day: 50
+    max_questions_per_day: 50
     max_series_per_day: 3
     queue_max: 20
 teacher:
