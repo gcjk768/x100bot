@@ -1,0 +1,127 @@
+telegram:
+  chat_id: "@your_channel_or_numeric_id"    # the learning channel, one item per message. TELEGRAM_CHAT_ID in .env overrides
+  message_thread_id: null                    # forum topic id when posting into a group topic. TELEGRAM_THREAD_ID overrides
+  owner_user_id: 0                           # my Telegram user id. The bot answers nobody else
+  admin_chat_id: ""                          # usually my private chat with the bot, for alerts. Empty means log only
+  notify_types: [brief, golden_hour]         # these post with sound, all other types post silently
+  preview_above_text: true                   # show the link preview image above the text
+  replace_previous_day: false                # true deletes yesterday's posts at 06:55. Bots can only delete posts younger than 48 hours
+schedule:
+  timezone: Asia/Singapore
+  sources_cron: "0 5 * * *"
+  plan_cron: "30 5 * * *"
+  firmware_cron: "15 5 * * 1"
+  post_minute: 0
+  misfire_grace_minutes: 30
+  slots: {"07": brief, "08": recipe, "09": camera_tip, "10": composition, "11": recipe, "12": photographer, "13": camera_tip, "14": video_lesson, "15": recipe, "16": drill, "17": golden_hour, "18": recipe, "19": composition, "20": recipe, "21": learning_tip, "22": review}
+  sunday_overrides: {"21": weekly_recap}
+location:
+  name: Singapore
+  latitude: 1.3521
+  longitude: 103.8198
+camera:
+  model: X100VI
+  facts_file: camera/x100vi_facts.yaml
+  menus_file: camera/menus.yaml
+learning:
+  start_date: "2026-10-05"                   # a Monday. Week 1 of the curriculum starts here
+  level: intermediate
+  curriculum_file: library/curriculum.yaml
+  spots_file: library/spots.yaml
+  learning_topics: [culling, reading light, storytelling and series, straight out of camera workflow, street etiquette, gear care in humidity, backing up to the NAS, choosing a recipe for the light]
+library:
+  recipe_repeat_days: 45
+  photographer_repeat_days: 45
+  camera_tip_repeat_days: 30
+  lesson_repeat_days: 60
+  video_repeat: never
+  min_stock: {recipe: 40, photographer: 10, camera_tip: 20, video: 10}
+sources:
+  recipe_indexes:                            # confirm both URLs during the build
+    - {name: "Fuji X Weekly, X-Trans V", url: "https://fujixweekly.com/fujifilm-x-trans-v-recipes/", sensor: "X-Trans V", parser: fujixweekly}
+    - {name: "Fuji X Weekly, X-Trans IV", url: "https://fujixweekly.com/fujifilm-x-trans-iv-recipes/", sensor: "X-Trans IV", parser: fujixweekly}
+  feeds:
+    - {name: "Fuji X Weekly", url: "https://fujixweekly.com/feed/", kind: rss}     # confirm during the build
+  youtube_channels:                          # channel ids resolved during the build (2026-10-02); Valerie Jardin has no channel of her own, so she is a photographer entry instead
+    - {name: "FUJIFILM X Series", id: "UCZvtcRxo82A4-7BQ2T8MOAA"}
+    - {name: "Sean Tucker", id: "UC_43mQmHwHPTBBqImFrWU3Q"}
+    - {name: "Pierre T. Lambert", id: "UChuxvFyBYM3VtnLDz8l6vNA"}
+    - {name: "Kevin Mullins", id: "UCO0TChYJmQGzq3nM7-kvV0A"}
+    - {name: "the owner Popsys", id: "UC6WYZrzBuNQnz_2F4EqjhDQ"}
+    - {name: "Jamie Windsor", id: "UCxCFQfO05RinX6x_r5VVuiA"}
+    - {name: "Mark Denney", id: "UCujr_HrX3ThMb34DV5YXHIg"}
+    - {name: "The Photographic Eye", id: "UCdQ2jU3p06eoXfrSWchHOrQ"}
+    - {name: "Faizal Westcott", id: "UCTsvuq1quT9ZC_-uac6dc4Q"}
+    - {name: "Samuel Streetlife", id: "UCcyHGNAjMTWAJ_ztX8JbGgQ"}
+    - {name: "Tatiana Hopper", id: "UCuuvwU8Fv1O2h3IqHtXtCRQ"}
+  manual_base: "https://fujifilm-dsc.com/en/manual/x100vi/"
+  firmware_page: "https://fujifilm-x.com/support/download/firmware/cameras/"   # linked from the manual; fujifilm-x.com answers 403 to the bot, see README
+weather:
+  rain_probability: 60                       # at or above this percent the hour counts as rain
+  overcast_cloud_cover: 70
+  sunny_cloud_cover: 30
+claude:
+  binary: claude
+  model: sonnet
+  fallback_model: haiku
+  auth: oauth                                # oauth = CLAUDE_CODE_OAUTH_TOKEN, apikey = ANTHROPIC_API_KEY plus --bare
+  max_retries: 4                             # passed as CLAUDE_CODE_MAX_RETRIES
+  research: {max_turns: 40, timeout_seconds: 900}
+  compose:  {max_turns: 4, timeout_seconds: 600}
+  critique: {max_turns: 4, timeout_seconds: 300, max_long_edge_px: 2048}
+  no_tools: [Bash, Edit, Write, Read, Glob, Grep, WebFetch, WebSearch, Agent, NotebookEdit]
+limits:
+  web:
+    per_domain_min_gap_seconds: 6            # random wait between 6 and 12 seconds per domain
+    per_domain_max_gap_seconds: 12
+    max_requests_per_day: 150                # all websites together, link checks included
+    max_new_recipe_pages_per_day: 10
+    max_seed_pages: 150                      # only for the one time `x100bot seed`
+    retries: 2
+    backoff_seconds: [30, 120]
+    domain_cooldown_hours: 24                # after HTTP 429 or 403, or three failures in a row
+    link_check_cache_days: 14
+    respect_robots_txt: true
+    user_agent: "x100bot/1.0 (personal learning bot, low volume)"
+  openmeteo:
+    max_calls_per_day: 6
+  telegram:
+    min_gap_seconds: 1.2
+    max_per_minute: 20
+    max_retries: 5
+    max_retry_after_seconds: 900
+    poll_timeout_seconds: 50
+  claude:
+    max_scheduled_calls_per_day: 3           # research, compose, one retry
+    max_critiques_per_day: 10
+  teacher:
+    max_critiques_per_day: 15
+    max_followups_per_day: 40
+    max_questions_per_day: 20
+    max_series_per_day: 3
+    queue_max: 20
+teacher:
+  enabled: true
+  model: sonnet                      # set opus for deeper critiques if my plan allows
+  fallback_model: haiku
+  level: intermediate
+  style: encouraging                 # encouraging, direct or socratic
+  default_detail: full               # full or quick
+  timeout_seconds: 300
+  session_days: 30
+  retention_days: 180                # originals and folders older than this are deleted
+  claude_long_edge_px: 2048
+  analysis_long_edge_px: 1024
+  overlay_long_edge_px: 1600
+  max_file_mb: 20
+  series_max_images: 8
+  album_debounce_seconds: 3
+  weekly_report_cron: "0 20 * * 0"
+  monthly_best_cron: "0 20 1 * *"
+  score_weights: {composition: 0.25, light: 0.25, moment: 0.15, exposure: 0.15, focus: 0.10, colour: 0.10}
+  # calibrated 2026-10-02 on the owner's first three photos: sharp subjects measured 1600 to 2500, out of focus sky cells 21 to 32,
+  # so 100 flags a frame whose sharpest area is still soft. tilt lines on real street scenes spread 6 to 7 degrees, so the
+  # confidence rule (spread under 2.5 for medium) keeps busy frames from being called tilted.
+  measurement_thresholds: {highlights_clipped_pct: 1.0, shadows_crushed_pct: 2.0, cast_ab: 6.0, tilt_min_degrees: 0.7, tilt_min_lines: 4, blur_laplacian_min: 100}
+repair:
+  enabled: false

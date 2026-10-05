@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "answer": {"type": "string", "maxLength": 1500},
+    "steps": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 8},
+    "settings": {"type": "object", "additionalProperties": {"type": "string"}},
+    "recipe_name": {"type": "string"},
+    "photographer_name": {"type": "string"},
+    "plan": {
+      "type": ["object", "null"],
+      "properties": {
+        "when": {"type": "string", "maxLength": 200},
+        "where_to_stand": {"type": "string", "maxLength": 200},
+        "look_for": {"type": "string", "maxLength": 300},
+        "backup": {"type": "string", "maxLength": 200}
+      },
+      "required": ["when", "where_to_stand", "look_for", "backup"]
+    }
+  },
+  "required": ["answer", "steps", "settings", "recipe_name", "photographer_name", "plan"]
+}

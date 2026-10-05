@@ -1,0 +1,1 @@
+My student reshot the photo you critiqued in this conversation. Read ./after.jpg, compare it with ./photo.jpg, and judge whether they applied your top fix. Stdin holds the new EXIF and measurements. Score the new photo with the same rubric. Return the compare object.

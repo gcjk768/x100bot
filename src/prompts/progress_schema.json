@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "summary": {"type": "string", "maxLength": 400},
+    "biggest_improvement": {"type": "string", "maxLength": 250},
+    "focus_next_week": {"type": "string", "maxLength": 250},
+    "exercise": {"type": "string", "maxLength": 300},
+    "encouragement": {"type": "string", "maxLength": 200}
+  },
+  "required": ["summary", "biggest_improvement", "focus_next_week", "exercise", "encouragement"]
+}

@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "seen": {"type": "string", "maxLength": 400},
+    "intent_assumed": {"type": "string", "maxLength": 200},
+    "summary": {"type": "string", "maxLength": 160},
+    "scores": {
+      "type": "object",
+      "properties": {
+        "composition": {"$ref": "#/$defs/score"},
+        "light": {"$ref": "#/$defs/score"},
+        "exposure": {"$ref": "#/$defs/score"},
+        "focus": {"$ref": "#/$defs/score"},
+        "colour": {"$ref": "#/$defs/score"},
+        "moment": {"$ref": "#/$defs/score"}
+      },
+      "required": ["composition", "light", "exposure", "focus", "colour", "moment"]
+    },
+    "what_works": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 3},
+    "top_fix": {
+      "type": "object",
+      "properties": {
+        "title": {"type": "string", "maxLength": 80},
+        "why": {"type": "string", "maxLength": 400},
+        "principle": {"type": "string", "maxLength": 200},
+        "steps": {"type": "array", "items": {"type": "string", "maxLength": 200}, "minItems": 2, "maxItems": 5}
+      },
+      "required": ["title", "why", "principle", "steps"]
+    },
+    "composition_notes": {"type": "string", "maxLength": 600},
+    "light_notes": {"type": "string", "maxLength": 400},
+    "timing_and_place": {"type": "string", "maxLength": 300},
+    "settings": {
+      "type": "object",
+      "properties": {
+        "mode": {"type": "string"},
+        "aperture": {"type": "string"},
+        "shutter": {"type": "string"},
+        "shutter_type": {"type": "string"},
+        "iso": {"type": "string"},
+        "exposure_comp": {"type": "string"},
+        "focus_mode": {"type": "string"},
+        "af_area": {"type": "string"},
+        "nd_filter": {"type": "string"},
+        "teleconverter": {"type": "string"},
+        "film_simulation": {"type": "string"},
+        "dynamic_range": {"type": "string"},
+        "recipe_name": {"type": "string"}
+      },
+      "required": ["mode", "aperture", "shutter", "shutter_type", "iso", "exposure_comp", "focus_mode", "af_area", "nd_filter", "teleconverter", "film_simulation", "dynamic_range", "recipe_name"]
+    },
+    "settings_why": {"type": "string", "maxLength": 500},
+    "reshoot_steps": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 6},
+    "edit_suggestions": {"type": "string", "maxLength": 300},
+    "crop": {
+      "type": ["object", "null"],
+      "properties": {
+        "x": {"type": "number"}, "y": {"type": "number"}, "w": {"type": "number"}, "h": {"type": "number"},
+        "aspect": {"type": "string", "enum": ["3:2", "4:5", "1:1", "16:9", "free"]},
+        "reason": {"type": "string", "maxLength": 200}
+      },
+      "required": ["x", "y", "w", "h", "aspect", "reason"]
+    },
+    "straighten_degrees": {"type": ["number", "null"]},
+    "exercise": {"type": "string", "maxLength": 300},
+    "learn_from": {
+      "type": ["object", "null"],
+      "properties": {"photographer_name": {"type": "string"}, "why": {"type": "string", "maxLength": 200}},
+      "required": ["photographer_name", "why"]
+    },
+    "tags": {"type": "array", "items": {"type": "string", "enum": ["no_clear_subject", "subject_too_small", "centred_without_reason", "tilted_horizon", "busy_background", "distracting_edges", "cut_off_limbs", "merges", "cluttered_foreground", "lack_of_depth", "too_much_empty_space", "unbalanced_frame", "flat_light", "harsh_light", "backlit_underexposed", "mixed_colour_light", "light_not_on_subject", "highlights_clipped", "shadows_crushed", "underexposed", "overexposed", "missed_focus", "motion_blur", "camera_shake", "focus_on_wrong_area", "depth_of_field_too_deep", "colour_cast", "oversaturated", "recipe_mismatch", "weak_moment", "awkward_timing", "no_story"]}},
+    "strength_tags": {"type": "array", "items": {"type": "string", "enum": ["strong_subject", "strong_light", "strong_lines", "good_layers", "good_timing", "clean_background", "good_colour", "good_balance", "good_exposure", "sharp_where_it_matters", "good_recipe_choice", "strong_story"]}},
+    "question": {"type": "string", "maxLength": 200},
+    "assignment_met": {"type": ["boolean", "null"]},
+    "assignment_note": {"type": "string", "maxLength": 200},
+    "cannot_tell": {"type": "string", "maxLength": 200}
+  },
+  "required": ["seen", "intent_assumed", "summary", "scores", "what_works", "top_fix", "composition_notes", "light_notes", "timing_and_place", "settings", "settings_why", "reshoot_steps", "edit_suggestions", "crop", "straighten_degrees", "exercise", "learn_from", "tags", "strength_tags", "question", "assignment_met", "assignment_note", "cannot_tell"],
+  "$defs": {
+    "score": {
+      "type": "object",
+      "properties": {"score": {"type": "integer", "minimum": 1, "maximum": 5}, "reason": {"type": "string", "maxLength": 200}},
+      "required": ["score", "reason"]
+    }
+  }
+}

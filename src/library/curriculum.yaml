@@ -1,0 +1,15 @@
+# 12 weekly themes. After week 12 the cycle repeats one level deeper; the compose brief carries the cycle number.
+# key is the short theme id that spots.yaml and the photographers' themes use.
+weeks:
+  - {week: 1, key: light, theme: "Seeing light: direction, hard and soft light, shade"}
+  - {week: 2, key: subject, theme: "One subject and a clean background"}
+  - {week: 3, key: placement, theme: "Placement and balance: thirds, centre, symmetry, visual weight"}
+  - {week: 4, key: lines, theme: "Lines and shapes: leading lines, diagonals, curves, repetition"}
+  - {week: 5, key: framing, theme: "Framing: frames within the frame, doorways, windows, gaps"}
+  - {week: 6, key: layering, theme: "Layering and depth: foreground, middle ground, background"}
+  - {week: 7, key: negative_space, theme: "Negative space and minimalism"}
+  - {week: 8, key: colour, theme: "Colour: contrast, harmony, colour as the subject"}
+  - {week: 9, key: bw, theme: "Black and white with ACROS: tone, contrast, texture"}
+  - {week: 10, key: street, theme: "Street moments: zone focusing, anticipation, gesture, juxtaposition"}
+  - {week: 11, key: people, theme: "People and environmental portraits at f/2, with consent"}
+  - {week: 12, key: night, theme: "Night and low light: blue hour, neon, reflections after rain, IBIS"}

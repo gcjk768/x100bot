@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "works": {"type": "array", "items": {"type": "string", "maxLength": 200}, "minItems": 1, "maxItems": 3},
+    "composition": {"type": "string", "maxLength": 600},
+    "light": {"type": "string", "maxLength": 300},
+    "change_next_time": {"type": "string", "maxLength": 250},
+    "exercise": {"type": "string", "maxLength": 250},
+    "recipe_name": {"type": "string"},
+    "camera_tip": {"type": "string", "maxLength": 250}
+  },
+  "required": ["works", "composition", "light", "change_next_time", "exercise", "recipe_name", "camera_tip"]
+}

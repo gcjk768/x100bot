@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slot_id": {"type": "string"},
+          "type": {"type": "string", "enum": ["brief", "recipe", "composition", "photographer", "camera_tip", "video_lesson", "drill", "golden_hour", "learning_tip", "review", "weekly_recap"]},
+          "fields": {
+            "type": "object",
+            "properties": {
+              "headline": {"type": "string", "maxLength": 90},
+              "title": {"type": "string", "maxLength": 90},
+              "assignment": {"type": "string", "maxLength": 300},
+              "why_today": {"type": "string", "maxLength": 200},
+              "best_for": {"type": "string", "maxLength": 120},
+              "why": {"type": "string", "maxLength": 400},
+              "try_today": {"type": "string", "maxLength": 200},
+              "what_it_is": {"type": "string", "maxLength": 400},
+              "how_to_see": {"type": "string", "maxLength": 300},
+              "camera_how": {"type": "string", "maxLength": 300},
+              "exercise": {"type": "string", "maxLength": 300},
+              "mistake": {"type": "string", "maxLength": 250},
+              "what_to_study": {"type": "string", "maxLength": 400},
+              "moves": {"type": "array", "items": {"type": "string", "maxLength": 80}, "maxItems": 3},
+              "try_it": {"type": "string", "maxLength": 300},
+              "how_detail": {"type": "string", "maxLength": 300},
+              "when": {"type": "string", "maxLength": 200},
+              "watch_for": {"type": "string", "maxLength": 300},
+              "then_try": {"type": "string", "maxLength": 250},
+              "steps": {"type": "array", "items": {"type": "string", "maxLength": 140}, "maxItems": 5},
+              "settings_hint": {"type": "string", "maxLength": 200},
+              "plan": {"type": "string", "maxLength": 300},
+              "look_for": {"type": "string", "maxLength": 250},
+              "setup": {"type": "string", "maxLength": 300},
+              "body": {"type": "string", "maxLength": 600},
+              "action": {"type": "string", "maxLength": 200},
+              "q1": {"type": "string", "maxLength": 160},
+              "q2": {"type": "string", "maxLength": 160},
+              "q3": {"type": "string", "maxLength": 160},
+              "culling_tip": {"type": "string", "maxLength": 250},
+              "recap": {"type": "string", "maxLength": 500},
+              "next_week_hint": {"type": "string", "maxLength": 200}
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": ["slot_id", "type", "fields"]
+      }
+    },
+    "run_note": {"type": "string"}
+  },
+  "required": ["slots", "run_note"]
+}

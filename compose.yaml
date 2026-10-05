@@ -1,0 +1,32 @@
+services:
+  x100bot:
+    build:
+      context: ./src
+      args:
+        UID: 1000
+    # Dockge Update then rebuilds from the code on disk (src is the GitHub tarball of the deployed commit)
+    pull_policy: build
+    image: x100bot:bf25f4a
+    container_name: x100bot
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      TZ: Asia/Singapore
+    volumes:
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml:ro
+      # Claude Code sessions, so the teacher follow ups survive a restart
+      - ./data/claude_home:/home/app/.claude
+      # Obsidian vault: movement log + memory (VAULT_DIR=/vault in .env)
+      - /volume1/<USER>/Obsidian/x100bot:/vault
+    command: x100bot serve
+    # Claude Code documents 4 GB of RAM as its floor, so no memory limit is set below that
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # One shot commands on the NAS:
+    #   docker compose run --rm x100bot x100bot status
+    #   docker compose run --rm x100bot x100bot plan --dry-run --offline

@@ -1,0 +1,13 @@
+# Places in Singapore to practise. Edit freely. The bot only ever suggests places from this file.
+# themes use the keys from curriculum.yaml: light, subject, placement, lines, framing, layering,
+# negative_space, colour, bw, street, people, night (plus repetition and reflections as extra tags).
+spots:
+  - {name: Chinatown, themes: [layering, street]}
+  - {name: Tiong Bahru, themes: [light, lines]}
+  - {name: Joo Chiat and Katong, themes: [colour]}
+  - {name: Kampong Glam and Haji Lane, themes: [colour, framing]}
+  - {name: Little India, themes: [colour, street]}
+  - {name: Marina Bay and the Helix Bridge, themes: [lines, night]}
+  - {name: Gardens by the Bay, themes: [night, reflections]}
+  - {name: HDB void decks and corridors, themes: [repetition, framing, light]}
+  - {name: MRT stations, themes: [lines, negative_space]}
