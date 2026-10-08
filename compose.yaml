@@ -1,5 +1,6 @@
 services:
   x100bot:
+    networks: [default, scrape-net]   # shared Playwright server ws://playwright:3000/
     build:
       context: ./src
       args:
@@ -30,3 +31,7 @@ services:
     # One shot commands on the NAS:
     #   docker compose run --rm x100bot x100bot status
     #   docker compose run --rm x100bot x100bot plan --dry-run --offline
+
+networks:
+  scrape-net:
+    external: true
