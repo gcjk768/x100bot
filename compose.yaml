@@ -13,6 +13,7 @@ services:
     init: true
     env_file: .env
     environment:
+      PLAYWRIGHT_WS_URL: ws://playwright:3000/
       TZ: Asia/Singapore
     volumes:
       - ./data:/app/data
