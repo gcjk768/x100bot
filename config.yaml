@@ -64,7 +64,7 @@ claude:
   binary: claude
   model: sonnet
   fallback_model: haiku
-  auth: oauth                                # oauth = CLAUDE_CODE_OAUTH_TOKEN, apikey = ANTHROPIC_API_KEY plus --bare
+  auth: apikey                                # oauth = CLAUDE_CODE_OAUTH_TOKEN, apikey = ANTHROPIC_API_KEY plus --bare
   max_retries: 4                             # passed as CLAUDE_CODE_MAX_RETRIES
   research: {max_turns: 40, timeout_seconds: 900}
   compose:  {max_turns: 4, timeout_seconds: 1200}

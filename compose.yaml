@@ -13,9 +13,11 @@ services:
     init: true
     env_file: .env
     environment:
+      PATH: "/fb:/home/app/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       PLAYWRIGHT_WS_URL: ws://playwright:3000/
       TZ: Asia/Singapore
     volumes:
+      - /volume1/docker/claude-fallback:/fb:ro   # claude -p fallback wrapper (API key -> subscription); /fb is first on PATH
       - ./data:/app/data
       - ./config.yaml:/app/config.yaml:ro
       # Claude Code sessions, so the teacher follow ups survive a restart
